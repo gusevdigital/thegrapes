@@ -115,7 +115,7 @@ if ( post_password_required() ) {
 			?>
 
 			<div class="summary entry-summary col-lg-5">
-				<div class="pt-info-wrapper mb-6">
+				<div class="pt-info-wrapper mb-4">
 						<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
 							<div class="pr-header mb-2">
 						<?php else : ?>
@@ -211,7 +211,7 @@ if ( post_password_required() ) {
 								<?php echo $product->get_price_html(); ?>
 							</div>
 						<?php endif; ?>
-						<div class="pt-info mb-8">
+						<div class="pt-info mb-4">
 							<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
 								<div class="pt-dts row">
 									<?php
@@ -275,9 +275,6 @@ if ( post_password_required() ) {
 									</div>
 								</div>
 							<?php endif; ?>
-							<div class="pt-desc mb-4">
-								<?php the_content(); ?>
-							</div>
 
 							<?php
 						  $product_video_link = get_post_meta( $product->get_id(), 'thegrapes_product_add_youtube', true );
@@ -285,7 +282,7 @@ if ( post_password_required() ) {
 							if( $product_video_link && $product_video_text ) :
 								parse_str( parse_url( $product_video_link, PHP_URL_QUERY ), $product_video_ID );
 								?>
-								<a href="#" class="pt-video d-flex align-items-center video-btn mb-4" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php echo $product_video_ID['v']; ?>" data-target="#videoModal">
+								<a href="#" class="pt-video d-flex align-items-center video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php echo $product_video_ID['v']; ?>" data-target="#videoModal">
 									<div class="pt-video-btn">
 										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path
@@ -299,15 +296,10 @@ if ( post_password_required() ) {
 								</a>
 							<?php endif;
 
-							$short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt );
-							if ( $short_description ) : ?>
-								<div class="notify desc-add p-2 mb-4">
-									<?php echo $short_description; ?>
-								</div>
-							<?php endif;?>
+							?>
 						</div>
 
-						<div class="pt-add-to-cart mb-8">
+						<div class="pt-add-to-cart">
 							<?php
 							  do_action( 'woocommerce_single_product_summary' );
 							?>
@@ -317,7 +309,6 @@ if ( post_password_required() ) {
 					<?php $pt_secure_checkout = get_theme_mod( 'set_secure_checkout_img' ); ?>
 					<?php if( isset( $pt_secure_checkout ) && $pt_secure_checkout ) : ?>
 						<div class="pt-secure-checkout mb-8">
-							<h2>Secure Checkout</h2>
 						<?php if( is_numeric( $pt_secure_checkout ) ) : ?>
 							<?php echo wp_get_attachment_image( $pt_secure_checkout, 'full', false, array( 'class' => 'h-auto w-auto secure-checkout' ) ); ?>
 						<?php else: ?>
@@ -383,73 +374,95 @@ if ( post_password_required() ) {
 
 						?>
 					</div>
-
-					<?php
-					  $pt_tasting_notes = get_post_meta( $product->get_id(), 'thegrapes_product_details_tasting_notes', true );
-					  $pt_soil_composition = get_post_meta( $product->get_id(), 'thegrapes_product_details_soil_composition', true );
-					  $pt_estate_altitude = get_post_meta( $product->get_id(), 'thegrapes_product_details_estate_altitude', true );
-					  $pt_aging = get_post_meta( $product->get_id(), 'thegrapes_product_details_aging', true );
-					  $pt_alcohol = get_post_meta( $product->get_id(), 'thegrapes_product_details_alcohol', true );
-					  $pt_acidity = get_post_meta( $product->get_id(), 'thegrapes_product_details_acidity', true );
-					  $pt_extract = get_post_meta( $product->get_id(), 'thegrapes_product_details_extract', true );
-
-						if ( $pt_tasting_notes || $pt_soil_composition || $pt_estate_altitude || $pt_aging || $pt_alcohol || $pt_acidity || $pt_extract ) :
-							?>
-
-							<div class="pt-add-info">
-								<h2><?php _e( 'Additional information', 'thegrapes' ); ?></h2>
-								<?php if ( $pt_tasting_notes ) : ?>
-								<div class="text-large mb-2">
-									<?php _e( 'Tasting notes', 'thegrapes' ); ?>
-								</div>
-								<p><?php echo $pt_tasting_notes; ?></p>
-								<?php endif; ?>
-								<?php if ( $pt_soil_composition || $pt_estate_altitude || $pt_aging || $pt_alcohol || $pt_acidity || $pt_extract ) : ?>
-								<div class="text-large mb-2">
-									<?php _e( 'Details', 'thegrapes' ); ?>
-								</div>
-								<table>
-									<?php if ( $pt_soil_composition ) : ?>
-									<tr>
-										<th><?php _e( 'Soil composition', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_soil_composition; ?></td>
-									</tr>
-									<?php endif; ?>
-									<?php if ( $pt_estate_altitude ) : ?>
-									<tr>
-										<th><?php _e( 'Estate altitude', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_estate_altitude; ?></td>
-									</tr>
-									<?php endif; ?>
-									<?php if ( $pt_aging ) : ?>
-									<tr>
-										<th><?php _e( 'Aging', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_aging; ?></td>
-									</tr>
-									<?php endif; ?>
-									<?php if ( $pt_alcohol ) : ?>
-									<tr>
-										<th><?php _e( 'Alcohol', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_alcohol; ?></td>
-									</tr>
-									<?php endif; ?>
-									<?php if ( $pt_acidity ) : ?>
-									<tr>
-										<th><?php _e( 'Acidity', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_acidity; ?></td>
-									</tr>
-									<?php endif; ?>
-									<?php if ( $pt_extract ) : ?>
-									<tr>
-										<th><?php _e( 'Dry extract', 'thegrapes' ); ?></th>
-										<td><?php echo $pt_extract; ?></td>
-									</tr>
-									<?php endif; ?>
-								</table>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container pb-8">
+		<div class="row">
+			<div class="col-lg-6">
+				<?php
+					$pt_tasting_notes = get_post_meta( $product->get_id(), 'thegrapes_product_details_tasting_notes', true );
+					$pt_soil_composition = get_post_meta( $product->get_id(), 'thegrapes_product_details_soil_composition', true );
+					$pt_estate_altitude = get_post_meta( $product->get_id(), 'thegrapes_product_details_estate_altitude', true );
+					$pt_aging = get_post_meta( $product->get_id(), 'thegrapes_product_details_aging', true );
+					$pt_alcohol = get_post_meta( $product->get_id(), 'thegrapes_product_details_alcohol', true );
+					$pt_acidity = get_post_meta( $product->get_id(), 'thegrapes_product_details_acidity', true );
+					$pt_extract = get_post_meta( $product->get_id(), 'thegrapes_product_details_extract', true );
+
+					if ( $pt_tasting_notes || $pt_soil_composition || $pt_estate_altitude || $pt_aging || $pt_alcohol || $pt_acidity || $pt_extract ) :
+						?>
+
+						<div class="pt-add-info">
+							<?php if ( $pt_tasting_notes ) : ?>
+							<div class="text-large mb-2">
+								<?php _e( 'Tasting notes', 'thegrapes' ); ?>
+							</div>
+							<p><?php echo $pt_tasting_notes; ?></p>
+							<?php endif; ?>
+							<?php if ( $pt_soil_composition || $pt_estate_altitude || $pt_aging || $pt_alcohol || $pt_acidity || $pt_extract ) : ?>
+							<div class="text-large mb-2">
+								<?php _e( 'Details', 'thegrapes' ); ?>
+							</div>
+							<table>
+								<?php if ( $pt_soil_composition ) : ?>
+								<tr>
+									<th><?php _e( 'Soil composition', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_soil_composition; ?></td>
+								</tr>
+								<?php endif; ?>
+								<?php if ( $pt_estate_altitude ) : ?>
+								<tr>
+									<th><?php _e( 'Estate altitude', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_estate_altitude; ?></td>
+								</tr>
+								<?php endif; ?>
+								<?php if ( $pt_aging ) : ?>
+								<tr>
+									<th><?php _e( 'Aging', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_aging; ?></td>
+								</tr>
+								<?php endif; ?>
+								<?php if ( $pt_alcohol ) : ?>
+								<tr>
+									<th><?php _e( 'Alcohol', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_alcohol; ?></td>
+								</tr>
+								<?php endif; ?>
+								<?php if ( $pt_acidity ) : ?>
+								<tr>
+									<th><?php _e( 'Acidity', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_acidity; ?></td>
+								</tr>
+								<?php endif; ?>
+								<?php if ( $pt_extract ) : ?>
+								<tr>
+									<th><?php _e( 'Dry extract', 'thegrapes' ); ?></th>
+									<td><?php echo $pt_extract; ?></td>
+								</tr>
+								<?php endif; ?>
+							</table>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+			</div>
+			<div class="col-lg-6">
+				<div class="text-large mb-2">
+					<?php _e( 'Description', 'thegrapes' ); ?>
+				</div>
+				<div class="pt-desc mb-4">
+					<?php the_content(); ?>
+				</div>
+				<?php
+				$short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt );
+				if ( $short_description ) : ?>
+				<div class="text-large mb-2">
+					<?php _e( 'Additional', 'thegrapes' ); ?>
+				</div>
+					<div class="notify desc-add p-2 mb-4">
+						<?php echo $short_description; ?>
+					</div>
+				<?php endif;?>
 			</div>
 		</div>
 	</div>
