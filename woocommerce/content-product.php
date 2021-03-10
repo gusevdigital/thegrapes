@@ -104,6 +104,13 @@ if( $product->is_type( 'variable' ) ){
 					?>
 				</div>
 			<?php endif; ?>
+			<?php if( $product->is_type( 'bundle' ) && $bundle_setup = get_post_meta( $product->get_id(), 'thegrapes_product_bundle_setup', true ) ) : ?>
+				<div class="pt-pr-bundle-setup">
+					<?php
+						echo $bundle_setup;
+					?>
+				</div>
+			<?php endif; ?>
 			<?php if( isset($vintage) && count($vintage) ) : ?>
 				<div class="pt-pr-years">
 					<?php foreach ($vintage as $year) : ?>

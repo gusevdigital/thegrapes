@@ -766,7 +766,7 @@ header {
   }
 }
 
-.navbar-bottom .dropdown:hover .dropdown-menu {
+#menu-main-menu .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0; // remove the gap so it doesn't close
  }
@@ -822,6 +822,42 @@ header {
    color: $black;
  }
 
+ /* DROPDOWN MENU */
+ .main-navbar .menu-item-has-children.dropdown {
+   padding-right: $spacer-1_4;
+ }
+.main-navbar .menu-item-has-children.dropdown:before {
+  content: '';
+  position: absolute;
+  right: $spacer-1_4;
+  top: 50%;
+  border: solid $gray-600;
+  border-width: 0 ($spacer-1_2 - 1px) ($spacer-1_2 - 1px) 0;
+  display: inline-block;
+  padding: $spacer-1_2 - 1px;
+  transform: rotate(45deg) translate(-50%,-50%);
+  -webkit-transform: rotate(45deg) translate(-50%,-50%);
+  @include transition( border-color $transition-base-param );
+}
+.main-navbar .menu-item-has-children.dropdown:hover:before,
+.main-navbar .menu-item-has-children.dropdown.active:before {
+   border-color: $black;
+ }
+ /*
+.main-navbar .menu-item-has-children.dropdown:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  border-left: $spacer solid transparent;
+  border-right: $spacer solid transparent;
+  border-top: $spacer solid rgba(11,34,59,0.08);
+  display: inline-block;
+  padding: 0px;
+  top: 0;
+  transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+}
+*/
 
  // BURGER
  .burger-toggler {
@@ -877,6 +913,13 @@ header {
   top: 0;
   z-index: 1037;
   @include transition( top $transition-base-param );
+}
+
+#account-dropdown .dropdown-item.active {
+  color: white!important;
+}
+.dropdown-header {
+  padding: 8px 8px;
 }
 
 .nav-minicart {
@@ -1926,6 +1969,10 @@ footer {
     }
   }
 
+  .pt-pr-bundle-setup {
+    margin-bottom: $spacer-2;
+  }
+
   .pt-pr-price,
   .pt-pr-score {
     color: $black;
@@ -2071,6 +2118,10 @@ footer {
       font-weight: $font-weight-bold;
     }
   }
+}
+
+.pt-add-to-cart-wrapper{
+  margin-bottom: $spacer-4
 }
 
 @include media-breakpoint-up(lg) {

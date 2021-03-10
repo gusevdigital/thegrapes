@@ -34,8 +34,9 @@ if ( ! $notices ) {
 					$_notice = $notice['notice'];
 					$notice_link = str_replace( 'class="', 'class="btn btn-primary mr-lg-1 mt-3 my-lg-0 m-100 ', getStringpart($_notice, '<a ', '</a>' ) );
 					$notice_link = strpos($notice_link, '</a>') !== false ? $notice_link : '';
+					$checkout_link = '<a class="btn btn-outline-primary mt-3 my-lg-0 m-100" href="' . wc_get_checkout_url() . '">' . __( 'Checkout', 'thegrapes' ) . '</a>';
 					$_notice = strip_tags(preg_replace('#(<a.*?>).*?(</a>)#', '$1$2', wc_kses_notice( $_notice )));
-					echo $_notice . $notice_link;
+					echo $_notice . '<div>' . $notice_link . $checkout_link . '</div>';
 					?>
 				</div>
 
