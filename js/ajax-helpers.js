@@ -53,6 +53,9 @@ jQuery(function($){ // use jQuery code inside this to avoid "$ is not defined" e
 	 * Filter
 	 */
 
+   /* Disable Ajax filters */
+   // Everything moved to products-filter.js
+/*
 	$(document).on('change', '#thegrapes-orderby', function() {
 		ptApplyFilter();
 	});
@@ -60,6 +63,7 @@ jQuery(function($){ // use jQuery code inside this to avoid "$ is not defined" e
 	$(document).on('change', 'input[name^="filterAttr"]', function() {
 		ptApplyFilter();
 	});
+  */
 
 	function ptApplyFilter() {
 

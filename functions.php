@@ -65,6 +65,7 @@ function thegrapes_scripts() {
   wp_register_script( 'actual-js', JS . '/jquery.actual.min.js', array( 'jquery' ), false, true );
   wp_register_script( 'lazy-js', JS . '/jquery.lazy.min.js', array( 'jquery' ), false, true );
   wp_register_script( 'lazy.av-js', JS . '/jquery.lazy.av.min.js', array( 'jquery' ), false, true );
+  wp_register_script( 'products-filter-js', JS . '/products-filter.js', array( 'jquery' ), false, true );
   wp_register_script( 'main-js', JS . '/main.js', array( 'jquery' ), false, true );
 
 	wp_enqueue_script( 'popper-ext-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', array( 'jquery' ),'',true );
@@ -75,10 +76,8 @@ function thegrapes_scripts() {
 	wp_enqueue_script( 'actual-js' );
 	wp_enqueue_script( 'lazy-js' );
 	wp_enqueue_script( 'lazy.av-js' );
+	wp_enqueue_script( 'products-filter-js' );
 	wp_enqueue_script( 'main-js' );
-
-  // filemtime returns the date when the file was last modified
-  // need to be changed to '1.0'
 
 
 
@@ -354,7 +353,7 @@ function thegrapes_filter_function(){
 	$params['posts_per_page'] = -1;
 
 	// Query tags
-
+/*
 	$filters = array();
 	$i = 0;
 	if(!empty($_POST['filterAttrColor'])) {
@@ -383,7 +382,7 @@ function thegrapes_filter_function(){
 		}
 
 	}
-
+*/
 	// Only simple and variable products
 	array_push( $params['tax_query'], array(
 		'relation' => 'OR',

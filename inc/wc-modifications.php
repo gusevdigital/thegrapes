@@ -561,10 +561,9 @@ function thegrapes_sorting_options( $options ){
 	unset( $options[ 'date' ] );
 	unset( $options[ 'popularity' ] );
 	//$options[ 'total_sales-desc' ] = 'Best selling';
-	$options[ 'menu_order-asc' ] = 'Best selling';
-	$options[ 'thegrapes_product_details_rating-desc' ] = 'Points';
-	$options[ 'thegrapes_product_details_award-asc' ] = 'Awards';
-	$options[ 'date-desc' ] = 'Newest';
+	$options[ 'menu-order' ] = 'Best selling';
+	$options[ 'points' ] = 'Points';
+	$options[ 'award' ] = 'Awards';
 	$options[ 'price-asc' ] = 'Price: low to high';
 	$options[ 'price-desc' ] = 'Price: high to low';
 	return $options;

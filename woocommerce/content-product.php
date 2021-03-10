@@ -61,10 +61,32 @@ if( $product->is_type( 'variable' ) ){
 				}
     }
 }
+$filter_tags = get_the_terms( $product_id , 'product_tag' );
+$tags_class_arr = array();
+if( $filter_tags ) {
+	foreach( $filter_tags as $tag ) {
+		array_push( $tags_class_arr, 'filter-' . $tag->slug );
+	}
+}
+$tags_class_str = implode( ' ', $tags_class_arr );
+
+$product_price = $product->is_type('variable') ? $product->get_variation_price() : $product->get_price();
 
 ?>
 
-<figure <?php wc_product_class( 'pt-pr col-lg-4 col-md-6 wow fadeInUp', $product ); ?> data-wow-duration=".8s"	>
+<figure <?php wc_product_class( 'pt-pr col-lg-4 col-md-6 ' . $tags_class_str, $product ); ?>
+	data-menu-order="<?php echo $product->get_menu_order(); ?>"
+	<?php if($product_price) {
+	 echo	' data-price="' . $product_price . '"';
+	}
+	if($pt_award && $pt_award > 0) {
+		echo ' data-award="' . $pt_award . '"';
+	}
+
+	if($pt_rating && $pt_rating > 0) {
+		echo ' data-rating="' . $pt_rating . '"';
+	}
+	?>>
 	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 		<?php
 		  if ( $pt_award && $pt_award > 0 || $pt_rating && $pt_rating > 0 ):

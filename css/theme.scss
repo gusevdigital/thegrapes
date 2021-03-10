@@ -2568,12 +2568,24 @@ table.table-adaptive {
   line-height: $line-height-lg;
   cursor: pointer;
   @include user-select(none);
+  @include transition( all $transition-base-param );
+
+  &.btn.btn-outline-primary.disabled {
+    opacity: 0.4;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    
+    .checkbox-text {
+      color: $primary !important;
+    }
+  }
 
    .checkbox-text {
      max-width: $spacer-10;
      font-size: $font-size-sm;
      line-height: $line-height-sm;
      color: $black;
+
 
      @include transition( color $transition-base-param );
 
