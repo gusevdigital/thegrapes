@@ -115,7 +115,7 @@ if ( post_password_required() ) {
 			?>
 
 			<div class="summary entry-summary col-lg-5">
-				<div class="pt-info-wrapper mb-4">
+				<div class="pt-info-wrapper mb-0">
 						<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
 							<div class="pr-header mb-2">
 						<?php else : ?>
@@ -211,9 +211,28 @@ if ( post_password_required() ) {
 								<?php echo $product->get_price_html(); ?>
 							</div>
 						<?php endif; ?>
-						<div class="pt-info mb-4">
+						<div class="pt-add-to-cart-wrapper">
+							<p>
+								<?php _e( ' With bundle deals you have 20% discount from the average prices', 'thegrapes' ); ?>
+							</p>
+							<?php
+								// Will get the list from the hook below by using global var
+							  do_action( 'woocommerce_single_product_summary' );
+							?>
+						</div>
+						<?php $pt_secure_checkout = get_theme_mod( 'set_secure_checkout_img' ); ?>
+						<?php if( isset( $pt_secure_checkout ) && $pt_secure_checkout ) : ?>
+							<div class="pt-secure-checkout">
+							<?php if( is_numeric( $pt_secure_checkout ) ) : ?>
+								<?php echo wp_get_attachment_image( $pt_secure_checkout, 'full', false, array( 'class' => 'h-auto w-auto secure-checkout' ) ); ?>
+							<?php else: ?>
+								<img src="<?php echo $pt_secure_checkout; ?>" class="h-auto w-auto secure-checkout" />
+							<?php endif; ?>
+							</div>
+						<?php endif; ?>
+						<div class="pt-info mb-2">
 							<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
-								<div class="pt-dts row">
+								<div class="pt-dts row pt-8">
 									<?php
 									$pt_rating_text = get_theme_mod( 'set_shop_points_text' );
 									$pt_rating_tooltip =
@@ -274,6 +293,31 @@ if ( post_password_required() ) {
 										</div>
 									</div>
 								</div>
+							<?php elseif( $product->is_type( 'bundle' )  ) : ?>
+								<div class="pt-dts row">
+									<?php if( $bundle_volume = get_post_meta( $product->get_id(), 'thegrapes_product_bundle_volume', true ) ) : ?>
+										<div class="pt-dt-item col-md-6 mb-4 d-flex flex-row">
+											<div class="pt-dt-img">
+												<img src="<?php echo ICONS . '/details-volume.png'; ?>" />
+											</div>
+											<div class="pt-dt-content d-flex flex-column">
+												<span class="pt-dt-header"><?php _e( 'Volume', 'thegrapes' ); ?></span>
+												<span class="pt-dt-text"><?php echo $bundle_volume; ?></span>
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php if( $bundle_setup = get_post_meta( $product->get_id(), 'thegrapes_product_bundle_setup', true ) ) : ?>
+										<div class="pt-dt-item col-md-6 mb-4 d-flex flex-row">
+											<div class="pt-dt-img">
+												<img src="<?php echo ICONS . '/details-bag.png'; ?>" />
+											</div>
+											<div class="pt-dt-content d-flex flex-column">
+												<span class="pt-dt-header"><?php _e( 'Setup', 'thegrapes' ); ?></span>
+												<span class="pt-dt-text"><?php echo $bundle_setup; ?></span>
+											</div>
+										</div>
+									<?php endif; ?>
+								</div>
 							<?php endif; ?>
 
 							<?php
@@ -299,25 +343,9 @@ if ( post_password_required() ) {
 							?>
 						</div>
 
-						<div class="pt-add-to-cart">
-							<?php
-							  do_action( 'woocommerce_single_product_summary' );
-							?>
-						</div>
 					</div>
 
-					<?php $pt_secure_checkout = get_theme_mod( 'set_secure_checkout_img' ); ?>
-					<?php if( isset( $pt_secure_checkout ) && $pt_secure_checkout ) : ?>
-						<div class="pt-secure-checkout mb-8">
-						<?php if( is_numeric( $pt_secure_checkout ) ) : ?>
-							<?php echo wp_get_attachment_image( $pt_secure_checkout, 'full', false, array( 'class' => 'h-auto w-auto secure-checkout' ) ); ?>
-						<?php else: ?>
-							<img src="<?php echo $pt_secure_checkout; ?>" class="h-auto w-auto secure-checkout" />
-						<?php endif; ?>
-						</div>
-					<?php endif; ?>
-
-					<div class="pt-info-bundle">
+					<div class="pt-info-bundle pt-4">
 						<?php
 						$bundle_exists = false;
 						$bundle_items_html = '';
@@ -374,10 +402,25 @@ if ( post_password_required() ) {
 
 						?>
 					</div>
-				</div>
+				<?php if ( $product->is_type( 'bundle' ) ) : ?>
+					<div class="pt-desc mb-4">
+						<?php the_content(); ?>
+					</div>
+					<?php
+					$short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt );
+					if ( $short_description && ! $product->is_type( 'bundle' ) ) : ?>
+					<div class="text-large mb-2">
+						<?php _e( 'Additional', 'thegrapes' ); ?>
+					</div>
+						<div class="notify desc-add p-2 mb-4">
+							<?php echo $short_description; ?>
+						</div>
+					<?php endif;?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
+	<?php if ( ! $product->is_type( 'bundle' ) ) : ?>
 	<div class="container pb-8">
 		<div class="row">
 			<div class="col-lg-6">
@@ -404,7 +447,7 @@ if ( post_password_required() ) {
 							<div class="text-large mb-2">
 								<?php _e( 'Details', 'thegrapes' ); ?>
 							</div>
-							<table>
+							<table class="mb-4">
 								<?php if ( $pt_soil_composition ) : ?>
 								<tr>
 									<th><?php _e( 'Soil composition', 'thegrapes' ); ?></th>
@@ -466,6 +509,87 @@ if ( post_password_required() ) {
 			</div>
 		</div>
 	</div>
+	<?php elseif ($GLOBALS['bundled_items_list']) : ?>
+
+		<div class="container mb-6">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="mb-4 pt-6 pb-4"><?php _e( 'Wines in the bundle', 'thegrapes' ); ?></h2>
+				</div>
+			</div>
+			<div class="row pt-bundle">
+				<?php foreach ( $GLOBALS['bundled_items_list'] as $bundled_item ) :?>
+					<div class="pt-bundle-item mb-6 d-table col-lg-4 col-md-6">
+						<?php
+
+						$product_id = $bundled_item->item_data['product_id'];
+
+						$product_price = $bundled_item->product->get_price_html();
+
+						$variation_exist = false;
+
+						$pt_bundle_qty = $bundled_item->item_data['quantity_min'];
+
+						if ($bundled_item->product->is_type( 'variable' )) {
+
+							if( isset($bundled_item->item_data['allowed_variations'][0]) && isset( $bundled_item->item_data['default_variation_attributes'] ) ) {
+								$variation_id = $bundled_item->item_data['allowed_variations'][0];
+								$variations_data = $bundled_item->item_data['default_variation_attributes'];
+
+								$variable_product = wc_get_product($variation_id);
+								//$regular_price = $variable_product->get_regular_price();
+								//$sale_price = $variable_product->get_sale_price();
+								$product_price = $variable_product->get_price_html();
+
+								$variation_exist = true;
+							}
+						}
+
+						if ( has_post_thumbnail( $product_id ) ) :
+
+								$image_post_id = get_post_thumbnail_id( $product_id );
+								$image         = get_the_post_thumbnail( $product_id, 'thegrapes-product-img-bundle img-shadow');
+							?>
+							<div class="pt-bundle-item-img d-table-cell">
+								<a href="<?php echo get_post_permalink( $product_id ); ?>" class="link-decoration-none" title="<?php echo get_the_title( $product_id ); ?>">
+									<?php echo $image; ?>
+								</a>
+							</div>
+						<?php endif; ?>
+						<div class="pt-bundle-item-desc d-table-cell  pl-3">
+							<div class="pt-bundle-item-desc-info mb-2">
+								<div class="pt-bundle-item-title">
+									<a href="<?php echo get_post_permalink( $product_id ); ?>" class="link-decoration-none" title="<?php echo get_the_title( $product_id ); ?>">
+										<?php echo get_the_title( $product_id ); ?>
+										<?php
+										  if( $pt_bundle_qty > 1 ) {
+												echo ' x' . $pt_bundle_qty;
+											}
+										?>
+									</a>
+								</div>
+								<?php if( $bundled_item->product->is_type( 'variable' ) && $variation_exist ) : ?>
+									<div class="pt-bundle-item-vint">
+										<?php
+										foreach ($variations_data as $key => $value) {
+											echo '<div>' . $key . ': ' . $value . '</div>';
+										}
+										?>
+									</div>
+								<?php endif; ?>
+								<div class="pt-bundle-item-price">
+									<?php echo __( 'Price: ', 'thegrapes' ) . $product_price; ?>
+								</div>
+							</div>
+								<a href="<?php echo get_post_permalink( $product_id ); ?>" class="btn btn-simple-primary btn-line" title="<?php echo get_the_title( $product_id ); ?>"><span><?php _e( 'View product', 'thegrapes' ); ?></span></a>
+						</div>
+					</div>
+				<?php
+				$attr = false;
+				endforeach; ?>
+			</div>
+		</div>
+	<?php endif; ?>
 </section>
 
 	<?php

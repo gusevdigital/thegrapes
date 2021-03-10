@@ -154,6 +154,11 @@ function thegrapes_product_settings_details( $tabs ){
 		'target'   => 'thegrapes_product_additional',
 		'priority' => 12,
 	);
+  $tabs['thegrapes_bundle_info'] = array(
+		'label'    => 'Bundle info',
+		'target'   => 'thegrapes_product_bundle_info',
+		'priority' => 13,
+	);
   $tabs['thegrapes_restock'] = array(
 		'label'    => 'Restock',
 		'target'   => 'thegrapes_product_restock',
@@ -376,6 +381,41 @@ function thegrapes_product_settings_additional_panel(){
 	echo '</div>';
 }
 
+/*-------------------------------
+* PRODUCT BUNDLE INFO TAB CONTENT
+*/
+
+add_action( 'woocommerce_product_data_panels', 'thegrapes_product_settings_bundle_info_panel' );
+
+function thegrapes_product_settings_bundle_info_panel(){
+
+	echo '<div id="thegrapes_product_bundle_info" class="panel woocommerce_options_panel hidden">';
+
+  // Bundle Volume
+  woocommerce_wp_text_input(
+      array(
+          'id' => 'thegrapes_product_bundle_volume',
+          'placeholder' => 'Ex "6 x 750 ml."',
+          'label' => __('Bundle volume', 'thegrapes'),
+          'value'   => get_post_meta( get_the_ID(), 'thegrapes_product_bundle_volume', true ),
+          'desc_tip' => 'true'
+      )
+  );
+
+  // Bundle Setup
+  woocommerce_wp_text_input(
+      array(
+          'id' => 'thegrapes_product_bundle_setup',
+          'placeholder' => 'Ex "3 white | 1 rose | 2 red"',
+          'label' => __('Bundle setup', 'thegrapes'),
+          'value'   => get_post_meta( get_the_ID(), 'thegrapes_product_bundle_setup', true ),
+          'desc_tip' => 'true'
+      )
+  );
+
+	echo '</div>';
+}
+
 
 /*-------------------------------
 * PRODUCT ADDITIONOAL TAB CONTENT
@@ -425,7 +465,9 @@ function thegrapes_save_fields( $id, $post ){
     'thegrapes_product_details_alcohol',
     'thegrapes_product_details_acidity',
     'thegrapes_product_details_extract',
-    'thegrapes_product_restock_text'
+    'thegrapes_product_restock_text',
+    'thegrapes_product_bundle_volume',
+    'thegrapes_product_bundle_setup',
   );
 
   foreach ( $save_fields as $field ) {
@@ -495,6 +537,7 @@ function save_variation_settings_fields( $variation_id, $loop ) {
 function load_variation_settings_fields( $variation ) {
     $variation['the_grapes_variation_rating'] = get_post_meta( $variation[ 'variation_id' ], 'the_grapes_variation_rating', true );
     $variation['the_grapes_variation_restock'] = get_post_meta( $variation[ 'variation_id' ], 'the_grapes_variation_restock', true );
+    $variation['name'] = print_r($variation['attributes']['attribute_vintage'],true);
 
     return $variation;
 }

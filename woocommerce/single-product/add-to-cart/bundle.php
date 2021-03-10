@@ -16,79 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$GLOBALS['bundled_items_list'] = $bundled_items;
 ?>
-<div class="pt-bundle pb-2">
-	<h2 class="mb-4"><?php _e( 'Wines in the bundle', 'thegrapes' ); ?></h2>
-	<?php foreach ( $bundled_items as $bundled_item ) :?>
-		<div class="pt-bundle-item mb-4 d-table w-100">
-			<?php
 
-			$product_id = $bundled_item->item_data['product_id'];
-
-			$product_price = $bundled_item->product->get_price_html();
-
-			$variation_exist = false;
-
-			$pt_bundle_qty = $bundled_item->item_data['quantity_min'];
-
-			if ($bundled_item->product->is_type( 'variable' )) {
-
-				if( isset($bundled_item->item_data['allowed_variations'][0]) && isset( $bundled_item->item_data['default_variation_attributes'] ) ) {
-					$variation_id = $bundled_item->item_data['allowed_variations'][0];
-					$variations_data = $bundled_item->item_data['default_variation_attributes'];
-
-					$variable_product = wc_get_product($variation_id);
-					//$regular_price = $variable_product->get_regular_price();
-					//$sale_price = $variable_product->get_sale_price();
-					$product_price = $variable_product->get_price_html();
-
-					$variation_exist = true;
-				}
-			}
-
-			if ( has_post_thumbnail( $product_id ) ) :
-
-					$image_post_id = get_post_thumbnail_id( $product_id );
-					$image         = get_the_post_thumbnail( $product_id, 'thegrapes-product-img-bundle img-shadow');
-				?>
-				<div class="pt-bundle-item-img d-table-cell">
-					<a href="<?php echo get_post_permalink( $product_id ); ?>" class="link-decoration-none" title="<?php echo get_the_title( $product_id ); ?>">
-						<?php echo $image; ?>
-					</a>
-				</div>
-			<?php endif; ?>
-			<div class="pt-bundle-item-desc d-table-cell  pl-3">
-				<div class="pt-bundle-item-desc-info mb-2">
-					<div class="pt-bundle-item-title">
-						<a href="<?php echo get_post_permalink( $product_id ); ?>" class="link-decoration-none" title="<?php echo get_the_title( $product_id ); ?>">
-							<?php echo get_the_title( $product_id ); ?>
-							<?php
-							  if( $pt_bundle_qty > 1 ) {
-									echo ' x' . $pt_bundle_qty;
-								}
-							?>
-						</a>
-					</div>
-					<?php if( $bundled_item->product->is_type( 'variable' ) && $variation_exist ) : ?>
-						<div class="pt-bundle-item-vint">
-							<?php
-							foreach ($variations_data as $key => $value) {
-								echo '<div>' . $key . ': ' . $value . '</div>';
-							}
-							?>
-						</div>
-					<?php endif; ?>
-					<div class="pt-bundle-item-price">
-						<?php echo __( 'Price: ', 'thegrapes' ) . $product_price; ?>
-					</div>
-				</div>
-					<a href="<?php echo get_post_permalink( $product_id ); ?>" class="btn btn-simple-primary btn-line" title="<?php echo get_the_title( $product_id ); ?>"><span><?php _e( 'View product', 'thegrapes' ); ?></span></a>
-			</div>
-		</div>
-	<?php
-	$attr = false;
-	endforeach; ?>
-</div>
 <?php
 
 /** WC Core action. */

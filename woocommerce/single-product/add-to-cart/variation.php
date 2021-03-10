@@ -19,10 +19,10 @@ defined( 'ABSPATH' ) || exit;
 	<div class="pt-price mb-4 woocommerce-variation-price price">
 		<?php _e( 'Total:', 'thegrapes'); ?> <span class="variations-price">{{{ data.variation.price_html }}}</span>
 	</div>
-	<script>
 
+	<script>
 		if({{{ data.variation.is_in_stock }}} && "{{{ data.variation.max_qty}}}" !== "") {
-			jQuery('.woocommerce-variation-availability .stock-left').html( ": {{{ data.variation.max_qty}}} <?php _e( 'left', 'thegrapes' ); ?> " );
+			jQuery('.woocommerce-variation-availability .stock-left').html( "&nbsp;({{{data.variation.name}}}):&nbsp;{{{ data.variation.max_qty}}} <?php _e( 'left', 'thegrapes' ); ?> " );
 		} else if ({{{ data.variation.is_in_stock }}} && "{{{ data.variation.max_qty}}}" === "") {
 			jQuery('.woocommerce-variation-availability .stock-availavility').html( "In stock" );
 		} else {
