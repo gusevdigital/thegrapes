@@ -341,6 +341,7 @@
     location.href = this.href;
     });
 
+
     /*
      * REMOVE LAODING SCREEN
      */
@@ -507,7 +508,7 @@
   /*
    * VARIATION RADIO BUTTON
    */
-  $(document).on('change', '.variation-radios input', function() {
+  $(document).on('change', '.variation-radios input[type="radio"]', function() {
     $('.variation-radios input:checked').each(function(index, element) {
       var $el = $(element);
       var thisName = $el.attr('name');
@@ -516,7 +517,7 @@
     });
   });
   $(document).on('woocommerce_update_variation_values', function() {
-    $('.variation-radios input').each(function(index, element) {
+    $('.variation-radios input[type="radio"]').each(function(index, element) {
       var $el = $(element);
       var thisName = $el.attr('name');
       var thisVal = $el.attr('value');

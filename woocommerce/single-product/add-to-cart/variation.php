@@ -45,5 +45,5 @@ defined( 'ABSPATH' ) || exit;
 	</script>
 </script>
 <script type="text/template" id="tmpl-unavailable-variation-template">
-	<p><?php esc_html_e( 'Sorry, this product is unavailable.', 'thegrapes' ); ?></p>
+	<p class=" pt-stock pt-stock__outofstock"><?php esc_html_e( 'Sorry, this product is unavailable.', 'thegrapes' ); ?></p>
 </script>

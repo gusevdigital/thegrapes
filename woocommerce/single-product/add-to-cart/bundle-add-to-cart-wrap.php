@@ -75,7 +75,7 @@ if( $product->get_stock_quantity()>0 || $product->is_in_stock() ) :
 		</div>
 		<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
 	<?php else : ?>
-		<div class="bundle_unavailable woocommerce-info pt-stock">
+		<div class="bundle_unavailable woocommerce-info pt-stock pt-stock pt-stock__outofstock">
 			<?php echo $purchasable_notice;?>
 		 </div>
 	<?php endif; ?>
@@ -83,7 +83,7 @@ if( $product->get_stock_quantity()>0 || $product->is_in_stock() ) :
 <?php
 else :
 	?>
-	<div class="bundle_availability pt-stock mb-4"><?php
+	<div class="bundle_availability pt-stock pt-stock__outofstock mb-4"><?php
 
 		// Availability html.
 		echo $availability_html;

@@ -61,7 +61,7 @@ if( $product->get_stock_quantity()>0 || $product->is_in_stock() ) : ?>
 	</form>
 	<?php do_action( 'woocommerce_after_add_to_cart_form' ); ?>
 <?php else : ?>
-	<div class="bundle_availability mb-4"><?php
+	<div class="bundle_availability pt-stock pt-stock__outofstock mb-4"><?php
 
 		_e( 'Out of stock', 'thegrapes' );
 

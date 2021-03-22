@@ -152,4 +152,35 @@
 
   }
 
+  $(document).ready(function() {
+    if( $('.shop-filters') ) {
+      var shop_filters = $('#shop-filters');
+      let searchParams = new URLSearchParams(window.location.search);
+      var params = [
+        'color',
+        'grapes',
+        'paring'
+      ];
+      params.forEach(function myFunction(item, index) {
+        if( searchParams.has(item) ) {
+          let param = searchParams.get(item);
+          let elem = $(shop_filters).find('.checkbox-container input#filter-' + item + '-' + param);
+          if( elem && elem.length ) {
+            $(elem).trigger('click');
+            checkBoxDecor(elem.parent());
+          }
+        }
+      });
+
+      // CHECKBOX
+      function checkBoxDecor(checkbox) {
+        $(checkbox).find('input').prop('checked') ? $(checkbox).addClass('is-checked') : $(checkbox).removeClass('is-checked')
+      }
+
+
+    }
+  });
+
+
+
 })(jQuery);

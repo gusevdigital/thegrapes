@@ -3,7 +3,7 @@
     <div class="row">
 
       <div class="col-lg-6 mb-4 order-1">
-        <a class="btn btn-primary btn-line m-100 filters-button" data-toggle="collapse" data-target="#shop-filters" aria-controls="shop-filters" aria-expanded="false" aria-label="Toggle navigation"><span><?php _e( 'Show filters', 'thegrapes' ); ?></span></a>
+        <a class="btn btn-primary btn-line m-100 filters-button" data-toggle="collapse" data-target="#shop-filters" aria-controls="shop-filters" aria-expanded="true" aria-label="Toggle navigation"><span><?php _e( 'Show filters', 'thegrapes' ); ?></span></a>
       </div>
       <div class="col-lg-6 mb-4 text-lg-right order-3 order-lg-2">
         <?php
@@ -22,7 +22,7 @@
         ?>
       </div>
       <div class="col-lg-12 order-2 order-lg-3 pb-4">
-        <div id="shop-filters" class="collapse">
+        <div id="shop-filters" class="collapse show">
           <div class="filters-wrap">
             <div class="row">
               <div class="col-xl-4 mb-3">

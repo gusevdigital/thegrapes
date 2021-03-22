@@ -30,6 +30,7 @@ if ( post_password_required() ) {
 	echo get_the_password_form(); // WPCS: XSS ok.
 	return;
 }
+$pt_stock_status = $product->get_stock_status();
 ?>
 <section id="product-<?php the_ID(); ?>" <?php wc_product_class( 'product-single', $product ); ?>>
 	<div class="container">
@@ -146,15 +147,19 @@ if ( post_password_required() ) {
 									?>
 							<?php endif; ?>
 							<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
-								<div class="pt-price <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>">
-									<?php echo $product->get_price_html(); ?>
+								<div class="pt-price__wrapper">
+									<div class="pt-price <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>">
+										<?php echo $product->get_price_html(); ?>
+									</div>
+									<?php echo display_product_discount( $product ); ?>
 								</div>
 							<?php endif; ?>
 						</div>
 						<?php
+						// disable stock
+
 							if( null !== $product->get_stock_status() && $product->get_stock_status() ) :
-								$pt_stock_status = $product->get_stock_status();
-								if( $pt_stock_status === "instock" && ! $product->is_type( 'bundle' ) ) :
+								if( $pt_stock_status === "instock" && ! $product->is_type( 'bundle' ) &&  ! $product->is_type( 'variable' )) :
 									?>
 									<div class="pt-stock mb-1">
 										<?php
@@ -185,10 +190,10 @@ if ( post_password_required() ) {
 										?>
 									</div>
 									<?php
-								elseif ( $pt_stock_status === "outofstock" && ! $product->is_type( 'bundle' ) ) :
+								elseif ( $pt_stock_status === "outofstock" && ! $product->is_type( 'bundle' ) && ! $product->is_type( 'variable' ) ) :
 									$restock_text = get_post_meta( $product->get_id(), 'thegrapes_product_restock_text', true );
 									?>
-									<div class="pt-stock mb-1">
+									<div class="pt-stock pt-stock__outofstock mb-1">
 										<?php _e( 'Out of stock.', 'thegrapes' ); ?>
 									</div>
 									<?php if( $restock_text ) : ?>
@@ -203,32 +208,39 @@ if ( post_password_required() ) {
 									<?php
 								endif;
 							endif;
+
 						?>
 						<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>
 							<div class="mb-5"></div>
 						<?php else : ?>
-							<div class="pt-price mb-4 <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>">
-								<?php echo $product->get_price_html(); ?>
+							<div class="pt-price__wrapper mb-4">
+								<div class="pt-price <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>">
+									<?php echo $product->get_price_html(); ?>
+								</div>
+								<?php echo display_product_discount( $product ); ?>
 							</div>
 						<?php endif; ?>
 						<div class="pt-add-to-cart-wrapper">
-							<p>
-								<?php _e( ' With bundle deals you have 20% discount from the average prices', 'thegrapes' ); ?>
-							</p>
-							<?php
-								// Will get the list from the hook below by using global var
-							  do_action( 'woocommerce_single_product_summary' );
-							?>
-						</div>
-						<?php $pt_secure_checkout = get_theme_mod( 'set_secure_checkout_img' ); ?>
-						<?php if( isset( $pt_secure_checkout ) && $pt_secure_checkout ) : ?>
-							<div class="pt-secure-checkout">
-							<?php if( is_numeric( $pt_secure_checkout ) ) : ?>
-								<?php echo wp_get_attachment_image( $pt_secure_checkout, 'full', false, array( 'class' => 'h-auto w-auto secure-checkout' ) ); ?>
-							<?php else: ?>
-								<img src="<?php echo $pt_secure_checkout; ?>" class="h-auto w-auto secure-checkout" />
+							<?php if( $pt_stock_status === "instock" ) : ?>
+								<p>
+									<?php _e( ' With bundle deals you have 20% discount from the average prices', 'thegrapes' ); ?>
+								</p>
 							<?php endif; ?>
-							</div>
+							<?php do_action( 'woocommerce_single_product_summary' ); ?>
+						</div>
+						<?php
+						if( $pt_stock_status === "instock" ) :
+							?>
+							<?php $pt_secure_checkout = get_theme_mod( 'set_secure_checkout_img' ); ?>
+							<?php if( isset( $pt_secure_checkout ) && $pt_secure_checkout ) : ?>
+								<div class="pt-secure-checkout">
+								<?php if( is_numeric( $pt_secure_checkout ) ) : ?>
+									<?php echo wp_get_attachment_image( $pt_secure_checkout, 'full', false, array( 'class' => 'h-auto w-auto secure-checkout' ) ); ?>
+								<?php else: ?>
+									<img src="<?php echo $pt_secure_checkout; ?>" class="h-auto w-auto secure-checkout" />
+								<?php endif; ?>
+								</div>
+							<?php endif; ?>
 						<?php endif; ?>
 						<div class="pt-info mb-2">
 							<?php if( $product->is_type( 'simple' ) || $product->is_type( 'variable' ) ) : ?>

@@ -86,12 +86,16 @@ $product_price = $product->is_type('variable') ? $product->get_variation_price()
 	if($pt_rating && $pt_rating > 0) {
 		echo ' data-rating="' . $pt_rating . '"';
 	}
+
+	$discount_html = display_product_discount( $product );
+
 	?>>
 	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 		<?php
-		  if ( $pt_award && $pt_award > 0 || $pt_rating && $pt_rating > 0 ):
+		  if ( $pt_award && $pt_award > 0 || $pt_rating && $pt_rating > 0 || $discount_html && $discount_html !== '' ):
 		?>
 			<div class="pt-pr-awards">
+
 				<?php if ( $pt_award && $pt_award > 0 ) : ?>
 					<div class="pt-pr-award<?php if( $pt_award_tooltip != '' ) echo ' tooltip-trigger'; ?>" <?php if( $pt_award_tooltip != '' ) echo $pt_award_tooltip; ?>>
 						<span class="golden"><?php echo $pt_award; ?></span>
@@ -110,6 +114,7 @@ $product_price = $product->is_type('variable') ? $product->get_variation_price()
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
+				<?php echo $discount_html; ?>
 			</div>
 		<?php endif; ?>
 		<div class="pt-pr-wrap text-center">

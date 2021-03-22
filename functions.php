@@ -65,8 +65,8 @@ function thegrapes_scripts() {
   wp_register_script( 'actual-js', JS . '/jquery.actual.min.js', array( 'jquery' ), false, true );
   wp_register_script( 'lazy-js', JS . '/jquery.lazy.min.js', array( 'jquery' ), false, true );
   wp_register_script( 'lazy.av-js', JS . '/jquery.lazy.av.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'products-filter-js', JS . '/products-filter.js', array( 'jquery' ), false, true );
-  wp_register_script( 'main-js', JS . '/main.js', array( 'jquery' ), false, true );
+  wp_register_script( 'products-filter-js', JS . '/products-filter.js', array( 'jquery' ), filemtime(get_stylesheet_directory() . '/js/products-filter.js'), true );
+  wp_register_script( 'main-js', JS . '/main.js', array( 'jquery' ), filemtime(get_stylesheet_directory(). '/js/main.js'), true );
 
 	wp_enqueue_script( 'popper-ext-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', array( 'jquery' ),'',true );
 	wp_enqueue_script( 'bootstrap-js' );
@@ -85,7 +85,7 @@ function thegrapes_scripts() {
   /* Ajax script */
   global $wp_query;
   // register our main script but do not enqueue it yet
-	wp_register_script( 'ajax-helpers', JS. '/ajax-helpers.js', array('jquery') );
+	wp_register_script( 'ajax-helpers', JS. '/ajax-helpers.js', array('jquery'), filemtime(get_stylesheet_directory() . '/js/ajax-helpers.js') );
 
 	wp_localize_script( 'ajax-helpers', 'thegrapes_loadmore_params', array(
 		'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
@@ -110,7 +110,7 @@ function thegrapes_scripts() {
   }
 
   wp_enqueue_style( 'animate-css', CSS . '/animate.min.css', array(), '1.0', 'all' );
-  wp_enqueue_style( 'theme-css', CSS . '/theme.min.css', array(), '1.0', 'all' );
+  wp_enqueue_style( 'theme-css', CSS . '/theme.min.css', array(), filemtime(get_stylesheet_directory() . '/css/theme.min.css'), 'all' );
 }
 
 add_action( 'wp_enqueue_scripts', 'thegrapes_scripts' );
@@ -119,7 +119,7 @@ add_action( 'wp_enqueue_scripts', 'thegrapes_scripts' );
 // Admin script
 
 function thegrapes_admin_scripts() {
-	wp_register_script( 'admin-js', JS . '/admin.js', array( 'jquery' ), false, true );
+	wp_register_script( 'admin-js', JS . '/admin.js', array( 'jquery' ), filemtime(get_stylesheet_directory() . '/js/admin.js'), true );
 	wp_enqueue_script( 'admin-js' );
 
 
@@ -136,7 +136,7 @@ function thegrapes_admin_scripts() {
 
 
 
-	wp_enqueue_style( 'admin-css', CSS . '/thegrapes-admin.min.css', array(), '1.0', 'all' );
+	wp_enqueue_style( 'admin-css', CSS . '/thegrapes-admin.min.css', array(), filemtime(get_stylesheet_directory() . '/css/thegrapes-admin.min.css'), 'all' );
 }
 
 add_action( 'admin_enqueue_scripts', 'thegrapes_admin_scripts' );
@@ -825,4 +825,170 @@ function redirect_to_checkout($redirect_url) {
      $redirect_url = wc_get_checkout_url();
   }
   return $redirect_url;
+}
+
+/* -------------------------------------------------- */
+/* 18. DISPLAY DISCOUNT ON PRODUCT
+/* -------------------------------------------------- */
+
+add_filter( 'woocommerce_sale_flash', 'add_percentage_to_sale_badge', 20, 3 );
+function add_percentage_to_sale_badge( $html, $post, $product ) {
+
+  if( $product->is_type('variable')){
+      $percentages = array();
+
+      // Get all variation prices
+      $prices = $product->get_variation_prices();
+
+      // Loop through variation prices
+      foreach( $prices['price'] as $key => $price ){
+          // Only on sale variations
+          if( $prices['regular_price'][$key] !== $price ){
+              // Calculate and set in the array the percentage for each variation on sale
+              $percentages[] = round( 100 - ( floatval($prices['sale_price'][$key]) / floatval($prices['regular_price'][$key]) * 100 ) );
+          }
+      }
+      // We keep the highest value
+      $percentage = max($percentages) . '%';
+
+  } elseif( $product->is_type('grouped') ){
+      $percentages = array();
+
+      // Get all variation prices
+      $children_ids = $product->get_children();
+
+      // Loop through variation prices
+      foreach( $children_ids as $child_id ){
+          $child_product = wc_get_product($child_id);
+
+          $regular_price = (float) $child_product->get_regular_price();
+          $sale_price    = (float) $child_product->get_sale_price();
+
+          if ( $sale_price != 0 || ! empty($sale_price) ) {
+              // Calculate and set in the array the percentage for each child on sale
+              $percentages[] = round(100 - ($sale_price / $regular_price * 100));
+          }
+      }
+      // We keep the highest value
+      $percentage = max($percentages) . '%';
+
+  } elseif( $product->is_type( 'bundle' ) ) {
+
+    $regular_price = (float) $product->get_regular_price();
+    $sale_price    = (float) $product->get_sale_price();
+    $percentage = "BUNDLE";
+
+  } else {
+      $regular_price = (float) $product->get_regular_price();
+      $sale_price    = (float) $product->get_sale_price();
+
+      if ( $sale_price != 0 || ! empty($sale_price) ) {
+          $percentage    = round(100 - ($sale_price / $regular_price * 100)) . '%';
+      } else {
+          return $html;
+      }
+  }
+  return '<span class="onsale">' . esc_html__( 'SALE', 'woocommerce' ) . ' ' . $percentage . '</span>';
+}
+
+
+function display_product_discount( $product ) {
+
+  $percentage = '';
+
+  if( $product->is_type('variable')){
+      $percentages = array();
+
+      $args = array(
+          'post_type'     => 'product_variation',
+          'post_status'   => array( 'private', 'publish', 'draft' ),
+          'numberposts'   => -1,
+          'orderby'       => 'menu_order',
+          'order'         => 'asc',
+          'post_parent'   => $product->get_id() // get parent post-ID
+      );
+      $variations = get_posts( $args );
+
+      $variation_prices = array();
+
+      foreach ( $variations as $variation ) {
+
+          // get variation ID
+          $variation_ID = $variation->ID;
+
+          // get variations meta
+          $product_variation = new WC_Product_Variation( $variation_ID );
+
+          $regular_price = (float) $product_variation->get_regular_price();
+          $sale_price    = (float) $product_variation->get_sale_price();
+          $real_price = (float) $product_variation->get_price();
+
+          if( $real_price && $real_price < $regular_price ) {
+              $percentages[]    = round(100 - ($real_price / $regular_price * 100));
+          }
+
+
+      }
+
+      // We keep the highest value
+      if( ! empty( $percentages ) ) {
+        $percentage = max($percentages);
+      }
+
+
+  } elseif( $product->is_type('grouped') ){
+
+      $percentages = array();
+
+      // Get all variation prices
+      $children_ids = $product->get_children();
+
+      // Loop through variation prices
+      foreach( $children_ids as $child_id ){
+          $child_product = wc_get_product($child_id);
+
+          $regular_price = (float) $child_product->get_regular_price();
+          $sale_price    = (float) $child_product->get_sale_price();
+          $real_price = (float) $child_product->get_price();
+
+          if ( $sale_price != 0 || ! empty($sale_price) ) {
+              // Calculate and set in the array the percentage for each child on sale
+              $percentages[] = round(100 - ($sale_price / $regular_price * 100));
+          } elseif( $real_price && $real_price < $regular_price ) {
+              $percentages[]    = round(100 - ($real_price / $regular_price * 100));
+          }
+      }
+      // We keep the highest value
+      $percentage = max($percentages);
+
+  } elseif( $product->is_type( 'bundle' ) ) {
+
+    $regular_price = (float) $product->get_regular_price();
+    $sale_price    = (float) $product->get_sale_price();
+    $real_price = (float) $product->get_price();
+
+    if ( $sale_price != 0 || ! empty($sale_price) ) {
+        $percentage    = round(100 - ($sale_price / $regular_price * 100));
+    } elseif( $real_price && $real_price < $regular_price ) {
+        $percentage    = round(100 - ($real_price / $regular_price * 100));
+    }
+
+  } else {
+    $regular_price = (float) $product->get_regular_price();
+    $sale_price    = (float) $product->get_sale_price();
+    $real_price = (float) $product->get_price();
+
+    if ( $sale_price != 0 || ! empty($sale_price) ) {
+        $percentage    = round(100 - ($sale_price / $regular_price * 100));
+    } elseif( $real_price && $real_price < $regular_price ) {
+        $percentage    = round(100 - ($real_price / $regular_price * 100));
+    }
+  }
+
+  if( $percentage ) {
+    return '<div class="pt-pr-discount">-' . $percentage . '%</div>';
+  } else {
+    return '';
+  }
+
 }
