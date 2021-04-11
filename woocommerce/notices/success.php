@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! $notices ) {
 	return;
 }
-
+if( ! $_GET['buynow'] ) :
 ?>
 <div class="container mb-4">
 	<div class="row">
@@ -44,3 +44,4 @@ if ( ! $notices ) {
 		</div>
 	</div>
 </div>
+<?php endif; ?>

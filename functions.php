@@ -992,3 +992,27 @@ function display_product_discount( $product ) {
   }
 
 }
+
+
+/* -------------------------------------------------- */
+/* 19. WOOCOMMERCE ORDERS TRACKING CODE
+/* -------------------------------------------------- */
+
+add_action( 'woocommerce_thankyou', 'my_custom_tracking' );
+
+function my_custom_tracking( $order_id ) {
+
+	$order = new WC_Order( $order_id );
+
+	$offerID = 14855;
+
+	$oID = $order->get_order_number();
+
+	$sTotal = $order->get_subtotal();
+
+	$dTotal = $order->get_discount_total();
+
+	//$newTotal = $sTotal - $dTotal;
+	$newTotal = $order->get_total();
+	echo '<iframe src="https://marktamerica.go2cloud.org/aff_l?offer_id=' . $offerID . '&amount=' . $newTotal . '&adv_sub=' . $oID . '" scrolling="no" frameborder="0" width="1" height="1"></iframe>';
+}

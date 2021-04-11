@@ -100,6 +100,7 @@ if ( woocommerce_product_loop() ) {
 		$args['post_type'] = 'product';
 		//$args['posts_per_page'] = $wp_query->query_vars['posts_per_page'];
 		$args['posts_per_page'] = -1;
+		/*
 		switch( $wp_query->query_vars['orderby'] ) {
 			case 'price':
 				$args['orderby'] = 'meta_value_num';
@@ -126,7 +127,7 @@ if ( woocommerce_product_loop() ) {
 				$args['order'] = $wp_query->query_vars['order'];
 				break;
 		}
-
+*/
 		// Query only simple and variable products
 		$args['tax_query'] = array(
 			'relation' => 'OR',
@@ -147,7 +148,7 @@ if ( woocommerce_product_loop() ) {
 	//	$shop_query = new WP_Query( $args );
 		?>
 		<div class="container position-relative">
-			<div class="row product-archive pt-6"  data-ajax='<?php echo json_encode( $wp_query->query_vars ) ; ?>'>
+			<div class="row product-archive pt-6">
 				<?php
 				//print_r($shop_query->found_posts);
 					while ( have_posts() ) {

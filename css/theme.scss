@@ -4101,3 +4101,76 @@ ins {
 .faq-item {
   margin-bottom: $spacer-6;
 }
+
+/*
+* OFFER TIMER
+*/
+.offers-item__title {
+  font-size: $h1-font-size;
+  text-transform: uppercase;
+  margin-bottom: $spacer;
+}
+.offers-item__timer {
+  display: flex;
+  padding: $spacer;
+  margin-bottom: $spacer-4;
+  border-left: 3px solid $primary;
+}
+.offers-item__timer .timer-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: $spacer-3;
+  width: $spacer-7;
+}
+.offers-item__timer .timer-item:last-of-type {
+  margin-right: 0;
+}
+.offers-item__timer .timer-item__label {
+  line-height: 1em;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-lg;
+    letter-spacing: 1px;
+}
+.offers-item__timer .timer-item__value {
+    font-size: $h2-font-size;
+    //font-family: "monckeberg",serif;
+    font-weight: bold;
+}
+
+.offers-item__content p {
+  margin-bottom: $spacer-2;
+}
+.offers-item__content ul {
+  margin:0;
+  padding:0;
+  list-style: none;
+}
+.offers-item__content ul li {
+  display: flex;
+}
+.offers-item__content ul li:before {
+  content: "";
+    display: inline-block;
+    background-color: $primary;
+    width: $spacer-2;
+    height: 2px;
+    margin-top: 11px;
+    margin-right: 8px;
+}
+.offers-item__old-price {
+  font-size: $h3-font-size;
+  font-weight: bold;
+  padding-top: $spacer-3;
+}
+.offers-item__old-price span {
+  text-decoration: underline;
+}
+.offers-item__price {
+  margin-bottom: $spacer-3;
+}
+.offers-item__price span {
+  color: $red;
+}
