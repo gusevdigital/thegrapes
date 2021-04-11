@@ -1232,3 +1232,94 @@ add_filter( 'woocommerce_show_variation_price', '__return_true' );
  * Remove thumbnail from woocommerce_before_shop_loop_item_title hook
  */
  remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+
+
+/*
+* CUSTOM PRODUCT TYPE -> OFFER
+*/
+/**
+ * @snippet       Create a New Product Type @ WooCommerce Admin
+ * @how-to        Get CustomizeWoo.com FREE
+ * @author        Rodolfo Melogli
+ * @compatible    Woo 4.3
+ * @donate $9     https://businessbloomer.com/bloomer-armada/
+ */
+
+// --------------------------
+// #1 Add New Product Type to Select Dropdown
+
+add_filter( 'product_type_selector', 'bbloomer_add_offer_product_type' );
+
+function bbloomer_add_offer_product_type( $types ){
+    $types[ 'offer' ] = 'Offer';
+    return $types;
+}
+
+// --------------------------
+// #2 Add New Product Type Class
+
+add_action( 'init', 'bbloomer_create_offer_product_type' );
+
+function bbloomer_create_offer_product_type(){
+    class WC_Product_Offer extends WC_Product {
+      public function get_type() {
+         return 'offer';
+      }
+    }
+}
+
+// --------------------------
+// #3 Load New Product Type Class
+
+add_filter( 'woocommerce_product_class', 'bbloomer_woocommerce_product_class', 10, 2 );
+
+function bbloomer_woocommerce_product_class( $classname, $product_type ) {
+    if ( $product_type == 'offer' ) {
+        $classname = 'WC_Product_Offer';
+    }
+    return $classname;
+}
+/*-----*/
+function wh_offer_admin_custom_js() {
+
+    if ('product' != get_post_type()) :
+        return;
+    endif;
+    ?>
+    <script type='text/javascript'>
+        jQuery(document).ready(function () {
+            //for Price tab
+            jQuery('.product_data_tabs .general_tab').addClass('show_if_offer').show();
+            jQuery('#general_product_data .pricing').addClass('show_if_offer').show();
+            //for Inventory tab
+            jQuery('.inventory_options').addClass('show_if_offer').show();
+            jQuery('#inventory_product_data ._manage_stock_field').addClass('show_if_offer').show();
+            jQuery('#inventory_product_data ._sold_individually_field').parent().addClass('show_if_offer').show();
+            jQuery('#inventory_product_data ._sold_individually_field').addClass('show_if_offer').show();
+            // for Schedule tab
+            jQuery('.product_data_tabs .wpas-schedule-sale-tab_options').addClass('show_if_offer').show();
+        });
+    </script>
+    <?php
+
+}
+
+add_action('admin_footer', 'wh_offer_admin_custom_js');
+
+/*
+* REDIRECT SINGLE OFFER TO OFFERS PAGE
+*/
+/*
+add_action('template_redirect','custom_shop_page_redirect');
+function custom_shop_page_redirect(){
+    if (class_exists('WooCommerce')){
+        if(is_product()){
+          $_product = wc_get_product( get_the_ID() );
+          if( $_product->is_type( 'offer' ) ) {
+            wp_redirect(home_url('/offers/'));
+            exit();
+          }
+        }
+    }
+    return;
+}*/

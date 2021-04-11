@@ -1676,6 +1676,80 @@ function thegrapes_customizer( $wp_customize ) {
     'mime_type' => 'image'
   ) ) );
 
+
+  /*---------------------------------------------------------------------*/
+  /*---------------------------------------------------------------------*/
+  // OFFERS
+  /*---------------------------------------------------------------------*/
+  /*---------------------------------------------------------------------*/
+
+  // OFFERS SECTION
+
+  $wp_customize->add_section(
+    'sec_offers', array(
+      'title'           => 'Offers',
+      'description'     => 'Offers Settings',
+      'priority' => 150
+    )
+  );
+
+
+  // OFFERS -> WINES LIST TITLE
+  $wp_customize->add_setting(
+    'set_offers_wines_title', array(
+      'type'               => 'theme_mod',
+      'default'             => '',
+      'sanitize_callback'   => 'sanitize_text_field'
+    )
+  );
+
+  $wp_customize->add_control(
+    'set_offers_wines_title', array(
+      'label'         => __( 'Wines heading:', 'thegrapes' ),
+      'description' => 'Ex. "Wines in the offer:"',
+      'section'       => 'sec_offers',
+      'type'          => 'text'
+    )
+  );
+
+  // OFFERS -> OLD PRICE TEXT
+  $wp_customize->add_setting(
+    'set_offers_old_price_title', array(
+      'type'               => 'theme_mod',
+      'default'             => '',
+      'sanitize_callback'   => 'sanitize_text_field'
+    )
+  );
+
+  $wp_customize->add_control(
+    'set_offers_old_price_title', array(
+      'label'         => __( 'Old price heading:', 'thegrapes' ),
+      'description' => 'Ex. "Total price is"',
+      'section'       => 'sec_offers',
+      'type'          => 'text'
+    )
+  );
+
+  // OFFERS -> NEW PRICE TEXT
+  $wp_customize->add_setting(
+    'set_offers_new_price_title', array(
+      'type'               => 'theme_mod',
+      'default'             => '',
+      'sanitize_callback'   => 'sanitize_text_field'
+    )
+  );
+
+  $wp_customize->add_control(
+    'set_offers_new_price_title', array(
+      'label'         => __( 'New price heading:', 'thegrapes' ),
+      'description' => 'Ex. "Offer price is"',
+      'section'       => 'sec_offers',
+      'type'          => 'text'
+    )
+  );
+
+
+
 // END OF thegrapes_customizer
 }
 // END OF thegrapes_customizer

@@ -66,7 +66,7 @@ $grapes_img = get_theme_mod( 'set_grapes_img' );
 						<img src="<?php echo $tax_img; ?>" alt="<?php echo $term->name; ?>" class="pt-group-img img-fluid"/>
 					</div>
         <?php endif; ?>
-				<div class="col-lg-4 mb-4">
+				<div class="col-lg-4 mb-4"> 
 					<h2><?php echo $term->name; ?></h2>
 					<?php echo wpautop($term->description); ?>
 				</div>

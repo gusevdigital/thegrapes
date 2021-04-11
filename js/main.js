@@ -341,6 +341,38 @@
     location.href = this.href;
     });
 
+    /*
+    * OFFER TIMERS
+    */
+    $('.offers-item__timer').each( function() {
+      if( $(this).attr('valid-till') ) {
+
+        var countDownDate = new Date($(this).attr('valid-till')).getTime();
+
+        $(this).timer = setInterval( () => {
+
+          var now = new Date().getTime();
+
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+
+
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          $(this).html('<span class="timer-item"><span class="timer-item__value">' + days + '</span><span class="timer-item__label">days</span></span><span class="timer-item"><span class="timer-item__value">' + hours + '</span><span class="timer-item__label">hours</span></span><span class="timer-item"><span class="timer-item__value">' + minutes + '</span><span class="timer-item__label">min</span></span><span class="timer-item"><span class="timer-item__value">' + seconds + '</span><span class="timer-item__label">sec</span></span>');
+
+          // If the count down is finished, write some text
+          if (distance < 0) {
+            clearInterval($(this).timer);
+            $(this).html("EXPIRED");
+          }
+        }, 1000);
+      }
+    });
 
     /*
      * REMOVE LAODING SCREEN
