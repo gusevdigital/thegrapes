@@ -20,7 +20,7 @@ $faq_header_img = get_theme_mod( 'set_faq_header_img' );
 		<div class="row d-flex align-items-center">
 			<div class="col-lg-6 col-xl-5 col-12 intro-text mb-1">
 				<div class="intro-text wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.8s">
-					<h1><?php _e( 'Frequently asked questions', 'thegrapes' ); ?></h1>
+					<h1><?php the_title(); ?></h1>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="<?php echo home_url( '/' ) ?>"><?php _e( 'Home', 'thegrapes' ); ?></a></li>
