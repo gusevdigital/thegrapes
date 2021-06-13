@@ -13,8 +13,10 @@ $h_main_title = get_theme_mod( 'set_home_main_title', '' );
 $h_main_text = get_theme_mod( 'set_home_main_desc', '' );
 $h_main_bottle = get_theme_mod( 'set_home_main_bottle' );
 $h_main_bottle_link = get_theme_mod( 'set_home_main_bottle_link', '' );
-$h_main_img =get_theme_mod( 'set_home_main_img' );
-$h_main_logo =get_theme_mod( 'set_home_main_logo' );
+$h_main_img = get_theme_mod( 'set_home_main_img' );
+$h_main_logo = get_theme_mod( 'set_home_main_logo' );
+$h_main_btn_text = get_theme_mod( 'set_home_main_btn_text' );
+$h_main_btn_link = get_theme_mod( 'set_home_main_btn_link' );
 
 $h_wine_title =get_theme_mod( 'set_home_wine_title', '' );
 
@@ -45,18 +47,24 @@ for ($i=0; $i < 5; $i++) {
           <div class="subheader mb-5 lead">
             <?php echo wpautop( esc_html($h_main_text), false ); ?>
           </div>
+          <?php if( $h_main_btn_text && $h_main_btn_link ) : ?>
           <div class="intro-buttons">
-            <a href="<?php echo wc_get_page_permalink( 'membership' ); ?>" title="<?php _e( 'Membership', 'thegrapes' ); ?>" class="btn btn-primary btn-line m-100 mr-3 mb-3"><span><?php _e( 'Membership', 'thegrapes' ); ?></span></a>
+            <a href="<?php echo esc_url( $h_main_btn_link ); ?>" title="<?php esc_attr_e( $h_main_btn_text ); ?>" class="btn btn-primary btn-line m-100 mr-3 mb-3"><span><?php esc_html_e( $h_main_btn_text, 'thegrapes' ); ?></span></a>
           </div>
+          <?php endif; ?>
         </div>
       </div>
       <div class="col-lg-7 col-12 home-intro-wrap order-1 order-lg-2 mb-5">
         <?php if( isset($h_main_img) && $h_main_img ): ?>
           <div class="home-intro-bg-img">
-            <?php echo wp_get_attachment_image( $h_main_img, 'full', false, array( 'class' => ' wow fadeInUp', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s' ) ); ?>
+            <?php
+			  $home_main_img = wp_get_attachment_image_url( $h_main_img, 'full' );
+
+			  echo wp_get_attachment_image( $h_main_img, 'full', false, array( 'class' => ' wow fadeInUp nolazyload', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s', 'width' => '626', 'height' => '560', 'sizes' => '(min-width:1200px) 626px, (min-width:960px) 528px, (min-width:720px) 536px, 357px' ) );
+			  ?>
             <?php if( isset($h_main_logo) && $h_main_logo ): ?>
               <div class="home-intro-logo wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.6s">
-                <?php echo wp_get_attachment_image( $h_main_logo, 'full' ); ?>
+                <?php echo wp_get_attachment_image( $h_main_logo, 'full', false, array( 'class' => 'nolazyload', 'width' => '130', 'height' => '160' ) ); ?>
               </div>
             <?php endif; ?>
           </div>
@@ -65,10 +73,10 @@ for ($i=0; $i < 5; $i++) {
           <div class="home-intro-wine-img wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s">
             <?php if( isset($h_main_bottle_link) && $h_main_bottle_link != '' ) : ?>
               <a href="<?php echo $h_main_bottle_link; ?>">
-                <?php echo wp_get_attachment_image( $h_main_bottle, 'full' ); ?>
+                <?php echo wp_get_attachment_image( $h_main_bottle, 'full', false, array( 'class' => 'nolazyload', 'width' => '318', 'height' => '664' ) ); ?>
               </a>
             <?php else: ?>
-              <?php echo wp_get_attachment_image( $h_main_bottle, 'full' ); ?>
+              <?php echo wp_get_attachment_image( $h_main_bottle, 'full', false, array( 'class' => 'nolazyload', 'width' => '318', 'height' => '664' ) ); ?>
             <?php endif; ?>
           </div>
         <?php endif; ?>
@@ -136,7 +144,7 @@ for ($i=0; $i < 5; $i++) {
     	<?php
     		$args = array(
     			'post_type' => 'product',
-    			'posts_per_page' => 6,
+    			'posts_per_page' => 3,
           'tax_query' => array(
             'relation' => 'AND',
             array(
@@ -202,7 +210,7 @@ for ($i=0; $i < 5; $i++) {
             ?>
           <div class="vy-pr-img mr-4 mr-lg-0 mb-0 mb-lg-4">
             <a href="<?php echo $vy_url; ?>" title="<?php echo $vy_name; ?>" >
-              <img src="<?php echo $vy_img_m[0] ? $vy_img_m[0] : $vy_img; ?>" alt="<?php echo $vy_name; ?>" />
+              <img src="<?php echo $vy_img_m[0] ? $vy_img_m[0] : $vy_img; ?>" alt="<?php echo $vy_name; ?>" width="200" height="167" />
             </a>
           </div>
           <?php endif; ?>

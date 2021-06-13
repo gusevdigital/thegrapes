@@ -49,7 +49,7 @@ do_action( 'woocommerce_before_main_content' );
 			</div>
 			<div class="col-lg-6 col-xl-7 col-12 home-intro-wrap mb-5">
         <?php if ( $tax_img = attachment_url_to_postid( get_term_meta(get_queried_object()->term_id, 'term_image', true) ) ) : ?>
-		      <div class="home-intro-bg-img">
+		      <div class="intro-bg-img">
 		      	<?php echo wp_get_attachment_image( $tax_img, 'full', false, array( 'class' => ' wow fadeInUp', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s' ) ); ?>
 		      </div>
         <?php endif; ?>

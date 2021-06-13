@@ -8,24 +8,23 @@
  */
 
 
- /* -------------------------------------------------- */
- /* 1. CONSTANTS */
- /* -------------------------------------------------- */
+/* -------------------------------------------------- */
+/* 1. CONSTANTS */
+/* -------------------------------------------------- */
 
- define ( 'THEMEPATH', get_template_directory() );
- define ( 'THEMEROOT', get_stylesheet_directory_uri() );
- define ( 'IMAGES', THEMEROOT . '/imgs' );
- define ( 'ICONS', THEMEROOT . '/icons' );
- define ( 'JS', THEMEROOT . '/js' );
- define ( 'CSS', THEMEROOT . '/css' );
+define ( 'THEMEPATH', get_template_directory() );
+define ( 'THEMEROOT', get_stylesheet_directory_uri() );
+define ( 'IMAGES', THEMEROOT . '/imgs' );
+define ( 'ICONS', THEMEROOT . '/icons' );
+define ( 'JS', THEMEROOT . '/js' );
+define ( 'CSS', THEMEROOT . '/css' );
 
 
+/* -------------------------------------------------- */
+/* 3. REGISTER HELPERS */
+/* -------------------------------------------------- */
 
- /* -------------------------------------------------- */
- /* 2. REGISTER HELPERS */
- /* -------------------------------------------------- */
-
- /**
+/**
  * Register Custom Navigation Walker
  * Register thegrapesmizer changes
  */
@@ -45,28 +44,26 @@ require_once get_template_directory() . '/inc/shortcodes.php';
 
 
 /* -------------------------------------------------- */
-/* 2. DETECT USER BROWSER */
+/* 4. DETECT USER BROWSER */
 /* -------------------------------------------------- */
 
 define ( 'USER_BROWSER', get_browser_name($_SERVER['HTTP_USER_AGENT']) );
 
 
-
-
 /* -------------------------------------------------- */
-/* 2. SCRIPTS & STYLES */
+/* 5. SCRIPTS & STYLES */
 /* -------------------------------------------------- */
 
 function thegrapes_scripts() {
-  wp_register_script( 'bootstrap-js', THEMEROOT . '/node_modules/bootstrap/dist/js/bootstrap.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'wow-js', JS . '/wow.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'isinviewport-js', JS . '/isInViewport.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'sticky-js', JS . '/jquery.sticky.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'actual-js', JS . '/jquery.actual.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'lazy-js', JS . '/jquery.lazy.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'lazy.av-js', JS . '/jquery.lazy.av.min.js', array( 'jquery' ), false, true );
-  wp_register_script( 'products-filter-js', JS . '/products-filter.js', array( 'jquery' ), filemtime(get_stylesheet_directory() . '/js/products-filter.js'), true );
-  wp_register_script( 'main-js', JS . '/main.js', array( 'jquery' ), filemtime(get_stylesheet_directory(). '/js/main.js'), true );
+	wp_register_script( 'bootstrap-js', THEMEROOT . '/node_modules/bootstrap/dist/js/bootstrap.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'wow-js', JS . '/wow.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'isinviewport-js', JS . '/isInViewport.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'sticky-js', JS . '/jquery.sticky.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'actual-js', JS . '/jquery.actual.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'lazy-js', JS . '/jquery.lazy.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'lazy.av-js', JS . '/jquery.lazy.av.min.js', array( 'jquery' ), false, true );
+	wp_register_script( 'products-filter-js', JS . '/products-filter.js', array( 'jquery' ), filemtime(get_stylesheet_directory() . '/js/products-filter.js'), true );
+	wp_register_script( 'main-js', JS . '/main.js', array( 'jquery' ), filemtime(get_stylesheet_directory(). '/js/main.js'), true );
 
 	wp_enqueue_script( 'popper-ext-js','https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', array( 'jquery' ),'',true );
 	wp_enqueue_script( 'bootstrap-js' );
@@ -79,12 +76,9 @@ function thegrapes_scripts() {
 	wp_enqueue_script( 'products-filter-js' );
 	wp_enqueue_script( 'main-js' );
 
-
-
-
-  /* Ajax script */
-  global $wp_query;
-  // register our main script but do not enqueue it yet
+	/* Ajax script */
+	global $wp_query;
+	// register our main script but do not enqueue it yet
 	wp_register_script( 'ajax-helpers', JS. '/ajax-helpers.js', array('jquery'), filemtime(get_stylesheet_directory() . '/js/ajax-helpers.js') );
 
 	wp_localize_script( 'ajax-helpers', 'thegrapes_loadmore_params', array(
@@ -96,21 +90,21 @@ function thegrapes_scripts() {
 	) );
 
 
- 	wp_enqueue_script( 'ajax-helpers' );
+	wp_enqueue_script( 'ajax-helpers' );
 
-  // Scripts for CHECKOUT page
-  if( is_page( 'checkout' ) ) {
-    wp_enqueue_style( 'jquery-ui-css', CSS . '/jquery-ui.min.css', array(), '1.0', 'all' );
-    wp_enqueue_style( 'jquery-theme-css', CSS . '/jquery-ui.theme.min.css', array(), '1.0', 'all' );
-    wp_enqueue_style( 'jquery-structure-css', CSS . '/jquery-ui.structure.min.css', array(), '1.0', 'all' );
-    wp_register_script( 'jquery-ui-js', JS . '/jquery-ui.min.js', array( 'jquery' ), false, true );
-    wp_register_script( 'datepicker-js', JS . '/datepicker.js', array( 'jquery', 'jquery-ui-js' ), false, true );
-    wp_enqueue_script( 'jquery-ui-js' );
-    wp_enqueue_script( 'datepicker-js' );
-  }
+	// Scripts for CHECKOUT page
+	if( is_page( 'checkout' ) ) {
+		wp_enqueue_style( 'jquery-ui-css', CSS . '/jquery-ui.min.css', array(), '1.0', 'all' );
+		wp_enqueue_style( 'jquery-theme-css', CSS . '/jquery-ui.theme.min.css', array(), '1.0', 'all' );
+		wp_enqueue_style( 'jquery-structure-css', CSS . '/jquery-ui.structure.min.css', array(), '1.0', 'all' );
+		wp_register_script( 'jquery-ui-js', JS . '/jquery-ui.min.js', array( 'jquery' ), false, true );
+		wp_register_script( 'datepicker-js', JS . '/datepicker.js', array( 'jquery', 'jquery-ui-js' ), false, true );
+		wp_enqueue_script( 'jquery-ui-js' );
+		wp_enqueue_script( 'datepicker-js' );
+	}
 
-  wp_enqueue_style( 'animate-css', CSS . '/animate.min.css', array(), '1.0', 'all' );
-  wp_enqueue_style( 'theme-css', CSS . '/theme.min.css', array(), filemtime(get_stylesheet_directory() . '/css/theme.min.css'), 'all' );
+	wp_enqueue_style( 'animate-css', CSS . '/animate.min.css', array(), '1.0', 'all' );
+	wp_enqueue_style( 'theme-css', CSS . '/theme.min.css', array(), filemtime(get_stylesheet_directory() . '/css/theme.min.css'), 'all' );
 }
 
 add_action( 'wp_enqueue_scripts', 'thegrapes_scripts' );
@@ -123,16 +117,16 @@ function thegrapes_admin_scripts() {
 	wp_enqueue_script( 'admin-js' );
 
 
-        wp_enqueue_media();
+	wp_enqueue_media();
 
-        wp_register_script( 'meta-image', JS . '/media-uploader.js', array( 'jquery' ) );
-        wp_localize_script( 'meta-image', 'meta_image',
-            array(
-                'title' => __( 'Upload an Image', 'thegrapes' ),
-                'button' => __( 'Use this Image', 'thegrapes' ),
-            )
-        );
-        wp_enqueue_script( 'meta-image' );
+	wp_register_script( 'meta-image', JS . '/media-uploader.js', array( 'jquery' ) );
+	wp_localize_script( 'meta-image', 'meta_image',
+					   array(
+						   'title' => __( 'Upload an Image', 'thegrapes' ),
+						   'button' => __( 'Use this Image', 'thegrapes' ),
+					   )
+					  );
+	wp_enqueue_script( 'meta-image' );
 
 
 
@@ -143,43 +137,44 @@ add_action( 'admin_enqueue_scripts', 'thegrapes_admin_scripts' );
 
 
 /* -------------------------------------------------- */
-/* 3. THEME SETUP */
+/* 6. THEME SETUP */
 /* -------------------------------------------------- */
 
 function thegrapes_config() {
-  // Register nav menu
-  // you can register more that one menu at once
-  register_nav_menus(
-    array(
-      'thegrapes_main_menu' => __( 'Main Menu', 'thegrapes' ),
-      'thegrapes_footer_menu' => __( 'Footer Menu', 'thegrapes' )
-    )
-  );
+	// Register nav menu
+	// you can register more that one menu at once
+	register_nav_menus(
+		array(
+			'thegrapes_main_menu' => __( 'Main Menu', 'thegrapes' ),
+			'thegrapes_footer_menu' => __( 'Footer Menu', 'thegrapes' )
+		)
+	);
 
-  // Declare Woocommerce support
-  add_theme_support( 'woocommerce', array(
-    'thumbnail_image_width' => 255,
-    'single_image_width' => 255,
-    'product_grid' => array(
-      'default_rows' => 3,
-      'min_rows' => 3,
-      'max_rows' => 12,
-      'default_columns' => 3,
-      'min_columns' => 1,
-      'max_columns' => 3
-    )
-  ));
+	// Declare Woocommerce support
+	add_theme_support( 'woocommerce', array(
+		'thumbnail_image_width' => 255,
+		'single_image_width' => 255,
+		'product_grid' => array(
+			'default_rows' => 3,
+			'min_rows' => 3,
+			'max_rows' => 12,
+			'default_columns' => 3,
+			'min_columns' => 1,
+			'max_columns' => 3
+		)
+	));
 
 	add_theme_support( 'post-thumbnails' );
 
-	add_image_size( 'thegrapes-product-img', 600, 600, false );
+	add_image_size( 'thegrapes-product-img', 400, 400, false );
+	add_image_size( 'thegrapes-product-gallery-img', 600, 600, false );
 	add_image_size( 'thegrapes-product-img-thumb', 80, 120, false );
 	add_image_size( 'thegrapes-product-img-bundle', 120, 180, false );
 	add_image_size( 'thegrapes-edu-preview', 508 );
 
-  if ( ! isset( $content_width ) ) {
-  	$content_width = 1200;
-  }
+	if ( ! isset( $content_width ) ) {
+		$content_width = 1200;
+	}
 
 	add_theme_support( 'title-tag' );
 
@@ -187,56 +182,67 @@ function thegrapes_config() {
 
 add_action( 'after_setup_theme', 'thegrapes_config', 0 );
 
+// Remove default WC image sizes
+function remove_wc_image_sizes() {
+	remove_image_size( 'woocommerce_thumbnail' );
+	remove_image_size( 'woocommerce_single' );
+	remove_image_size( 'woocommerce_gallery_thumbnail' );
+	remove_image_size( 'shop_catalog' );
+	remove_image_size( 'shop_single' );
+	remove_image_size( 'shop_thumbnail' );
+}
+add_action('init', 'remove_wc_image_sizes');
+
 
 /*-------------------------------*/
-/* 4. CUSTOM POST TYPE */
+/* 7. CUSTOM POST TYPE */
 /*-------------------------------*/
 
 function thegrapes_post_types() {
 
-    // FAQ Post Type
+	// FAQ Post Type
 
-    register_post_type( 'faq', array(
-        'show_in_rest' => false,
-        'public' => true,
-        'rewrite' => array(
-            'slug' => 'faq'
-        ),
-        'exclude_from_search' => true,
-        'publicly_queryable'  => false,
-        'query_var'           => false,
-        'labels' => array(
-            'name' => 'FAQ',
-            'singular_name' => 'FAQ',
-            'add_new_item' => 'Add New FAQ',
-            'edit_item' => 'Edit FAQ',
-            'view_item' => 'View FAQ',
-            'view_items' => 'View FAQ',
-            'search_items' => 'Search FAQ',
-            'not_found' => 'No FAQ found',
-            'not_found_in_trash' => 'No FAQ found in Trash',
-            'all_items' => 'All FAQ',
-            'archives' => 'FAQ Archives',
-            'attributes' => 'FAQ Attributes',
-            'insert_into_item' => 'Insert into FAQ',
-            'upload_to_this_item' => 'Upload to this FAQ',
-            'filter_items_list' => 'Filter FAQ list',
-            'items_list_navigaition' => 'FAQ list navigation',
-            'items_list' => 'FAQ list',
-            'item_published_privately' => 'FAQ published privately',
-            'item_revereted_to_draft' => 'FAQ reverted to draft',
-            'item_scheduled' => 'FAQ scheduled',
-            'item_updated' => 'FAQ updated'
-        ),
-        'description' => 'FAQ Post Type',
-        'menu_icon' => 'dashicons-search',
-        'supports' => array(
-            'title',
-            'editor',
-            'revisions'
-        ),
-        'has_archive' => false
-    ));
+	register_post_type( 'faq', array(
+		'show_in_rest' => false,
+		'public' => true,
+		'rewrite' => array(
+			'slug' => 'faq'
+		),
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+		'query_var'           => false,
+		'labels' => array(
+			'name' => 'FAQ',
+			'singular_name' => 'FAQ',
+			'add_new_item' => 'Add New FAQ',
+			'edit_item' => 'Edit FAQ',
+			'view_item' => 'View FAQ',
+			'view_items' => 'View FAQ',
+			'search_items' => 'Search FAQ',
+			'not_found' => 'No FAQ found',
+			'not_found_in_trash' => 'No FAQ found in Trash',
+			'all_items' => 'All FAQ',
+			'archives' => 'FAQ Archives',
+			'attributes' => 'FAQ Attributes',
+			'insert_into_item' => 'Insert into FAQ',
+			'upload_to_this_item' => 'Upload to this FAQ',
+			'filter_items_list' => 'Filter FAQ list',
+			'items_list_navigaition' => 'FAQ list navigation',
+			'items_list' => 'FAQ list',
+			'item_published_privately' => 'FAQ published privately',
+			'item_revereted_to_draft' => 'FAQ reverted to draft',
+			'item_scheduled' => 'FAQ scheduled',
+			'item_updated' => 'FAQ updated'
+		),
+		'description' => 'FAQ Post Type',
+		'menu_icon' => 'dashicons-search',
+		'supports' => array(
+			'title',
+			'editor',
+			'revisions'
+		),
+		'has_archive' => false
+	));
 
 }
 
@@ -244,23 +250,23 @@ add_action( 'init', 'thegrapes_post_types' );
 
 
 /* -------------------------------------------------- */
-/* 5. WOOCOMMERCE REMOVE DEFAULT STYLESHEETS */
+/* 8. WOOCOMMERCE REMOVE DEFAULT STYLESHEETS */
 /* -------------------------------------------------- */
 
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 
 
 /* -------------------------------------------------- */
-/* 6. WOOCOMMERCE ADD MODIFICATIONS */
+/* 9. WOOCOMMERCE ADD MODIFICATIONS */
 /* -------------------------------------------------- */
 
 if ( class_exists( 'WooCommerce' ) ) {
-  require THEMEPATH . '/inc/wc-modifications.php';
+	require THEMEPATH . '/inc/wc-modifications.php';
 }
 
 
 /* -------------------------------------------------- */
-/* 7. AJAX HANDLER */
+/* 10. AJAX HANDLER */
 /* -------------------------------------------------- */
 
 function thegrapes_loadmore_ajax_handler(){
@@ -269,24 +275,24 @@ function thegrapes_loadmore_ajax_handler(){
 	$args = json_decode( stripslashes( $_POST['query'] ), true );
 	$args['paged'] = $_POST['page'] + 1; // we need next page to be loaded
 	$args['post_status'] = 'publish';
-  $args['posts_per_page'] = $_POST['posts_per_page'];
+	$args['posts_per_page'] = $_POST['posts_per_page'];
 
-  // it is always better to use WP_Query but not here
+	// it is always better to use WP_Query but not here
 	query_posts( $args );
 
 	if( have_posts() ) :
 
-		// run the loop
-		while( have_posts() ): the_post();
+	// run the loop
+	while( have_posts() ): the_post();
 
-			// look into your theme code how the posts are inserted, but you can use your own HTML of course
-			// do you remember? - my example is adapted for Twenty Seventeen theme
-			get_template_part( 'template-parts/content', get_post_format() );
-			// for the test purposes comment the line above and uncomment the below one
-			// the_title();
+	// look into your theme code how the posts are inserted, but you can use your own HTML of course
+	// do you remember? - my example is adapted for Twenty Seventeen theme
+	get_template_part( 'template-parts/content', get_post_format() );
+	// for the test purposes comment the line above and uncomment the below one
+	// the_title();
 
 
-		endwhile;
+	endwhile;
 
 	endif;
 	die; // here we exit the script and even no wp_reset_query() required!
@@ -311,8 +317,8 @@ function thegrapes_filter_function(){
 			$params = array(
 				'post_type' => 'product',
 				//'posts_per_page' => $_POST['thegrapes_posts_per_page'],
-		    'orderby'   => 'meta_value_num',
-		    'meta_key'  => '_' . $order[0],
+				'orderby'   => 'meta_value_num',
+				'meta_key'  => '_' . $order[0],
 				'order'	=> $order[1]
 			);
 			break;
@@ -338,8 +344,8 @@ function thegrapes_filter_function(){
 			$params = array(
 				'post_type' => 'product',
 				//'posts_per_page' => $_POST['thegrapes_posts_per_page'],
-		    'orderby'   => 'meta_value_num',
-		    'meta_key'  => $order[0],
+				'orderby'   => 'meta_value_num',
+				'meta_key'  => $order[0],
 				'order'	=> $order[1]
 			);
 			break;
@@ -353,7 +359,7 @@ function thegrapes_filter_function(){
 	$params['posts_per_page'] = -1;
 
 	// Query tags
-/*
+	/*
 	$filters = array();
 	$i = 0;
 	if(!empty($_POST['filterAttrColor'])) {
@@ -387,25 +393,25 @@ function thegrapes_filter_function(){
 	array_push( $params['tax_query'], array(
 		'relation' => 'OR',
 		array(
-					'taxonomy' => 'product_type',
-					'field'    => 'slug',
-					'terms'    => 'simple',
-			),
+			'taxonomy' => 'product_type',
+			'field'    => 'slug',
+			'terms'    => 'simple',
+		),
 		array(
-					'taxonomy' => 'product_type',
-					'field'    => 'slug',
-					'terms'    => 'variable',
-			),
+			'taxonomy' => 'product_type',
+			'field'    => 'slug',
+			'terms'    => 'variable',
+		),
 	));
 
 
 	// Query Taxonomy
 	if ( !empty($_POST['taxonomy']) && !empty($_POST['slug']) ) {
 		array_push($params['tax_query'], array(
-        'taxonomy'      => $_POST['taxonomy'],
-        'field'         => 'slug',
-        'terms'         => $_POST['slug']
-    ));
+			'taxonomy'      => $_POST['taxonomy'],
+			'field'         => 'slug',
+			'terms'         => $_POST['slug']
+		));
 	}
 
 	// Query relation
@@ -414,30 +420,30 @@ function thegrapes_filter_function(){
 	}
 	query_posts( $params );
 
-  global $wp_query;
+	global $wp_query;
 
 	if( have_posts() ) :
 
 
- 		ob_start(); // start buffering because we do not need to print the posts now
+	ob_start(); // start buffering because we do not need to print the posts now
 
-		while( have_posts() ): the_post();
-			do_action( 'woocommerce_shop_loop' );
+	while( have_posts() ): the_post();
+	do_action( 'woocommerce_shop_loop' );
 
-			wc_get_template_part( 'content', 'product' );
+	wc_get_template_part( 'content', 'product' );
 
 
-		endwhile;
+	endwhile;
 
- 		$posts_html = ob_get_contents(); // we pass the posts to variable
-   		ob_end_clean(); // clear the buffer
+	$posts_html = ob_get_contents(); // we pass the posts to variable
+	ob_end_clean(); // clear the buffer
 	else:
-		$posts_html = '<h2>Nothing found for your criteria.</h2>';
+	$posts_html = '<h2>Nothing found for your criteria.</h2>';
 	endif;
 
 	// no wp_reset_query() required
 
- 	echo json_encode( array(
+	echo json_encode( array(
 		'posts' => json_encode( $wp_query->query_vars ),
 		'max_page' => $wp_query->max_num_pages,
 		'found_posts' => $wp_query->found_posts,
@@ -451,7 +457,7 @@ add_action('wp_ajax_thegrapesfilter', 'thegrapes_filter_function');
 add_action('wp_ajax_nopriv_thegrapesfilter', 'thegrapes_filter_function');
 
 /* -------------------------------------------------- */
-/* 7. Show cart contents / total Ajax */
+/* 11. Show cart contents / total Ajax */
 /* -------------------------------------------------- */
 
 add_filter( 'woocommerce_add_to_cart_fragments', 'thegrapes_woocommerce_header_add_to_cart_fragment' );
@@ -461,15 +467,15 @@ function thegrapes_woocommerce_header_add_to_cart_fragment( $fragments ) {
 
 	ob_start();
 
-	?>
-	<span class="minicart-number items"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-	<?php
+?>
+<span class="minicart-number items"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+<?php
 	$fragments['span.items'] = ob_get_clean();
 	return $fragments;
 }
 
 /* -------------------------------------------------- */
-/* 8. REMOVE VIRTUAL AND DOWNLOADABLE IN WOOCOMMERCE
+/* 12. REMOVE VIRTUAL AND DOWNLOADABLE IN WOOCOMMERCE
 /* -------------------------------------------------- */
 
 add_filter( 'product_type_options', function( $options ) {
@@ -513,7 +519,7 @@ function thegrapes_product_type_callback(){
 
 
 /* -------------------------------------------------- */
-/* 9. SETUP RELATED PRODUCTS LIMIT
+/* 13. SETUP RELATED PRODUCTS LIMIT
 /* -------------------------------------------------- */
 
 add_filter( 'woocommerce_output_related_products_args', 'thegrapes_related_products_args' );
@@ -525,48 +531,48 @@ function thegrapes_related_products_args( $args ) {
 
 
 /* -------------------------------------------------- */
-/* 10. HIGHLIGHT MENU FOR CUSTOM TAXONOMY
+/* 14. HIGHLIGHT MENU FOR CUSTOM TAXONOMY
 /* -------------------------------------------------- */
 
 add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
 
 function special_nav_class($classes, $item) {
-    global $naventries;
-    $naventries[$item->ID] = $item;
-    if($item->type == 'product-vineyards' || $item->type == 'product-estates' ) {
-        global $post;
-        $terms = get_the_terms($post->ID, $item->object);
+	global $naventries;
+	$naventries[$item->ID] = $item;
+	if($item->type == 'product-vineyards' || $item->type == 'product-estates' ) {
+		global $post;
+		$terms = get_the_terms($post->ID, $item->object);
 
-        $currentTerms = array();
-        if ( $terms && ! is_wp_error( $terms ) ) {
-            foreach($terms as $term) {
-                $currentTerms[] = $term->slug;
-            }
-        }
+		$currentTerms = array();
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			foreach($terms as $term) {
+				$currentTerms[] = $term->slug;
+			}
+		}
 
-        if(is_array($currentTerms) && count($currentTerms) > 0) {
-            $currentTerm = get_term($item->object_id, $item->object);
-            if(in_array($currentTerm->slug, $currentTerms)) {
-                $classes[] = 'current-menu-item';
-            }
-        }
-    }
+		if(is_array($currentTerms) && count($currentTerms) > 0) {
+			$currentTerm = get_term($item->object_id, $item->object);
+			if(in_array($currentTerm->slug, $currentTerms)) {
+				$classes[] = 'current-menu-item';
+			}
+		}
+	}
 
-     return $classes;
+	return $classes;
 }
 
 /* -------------------------------------------------- */
-/* 13. ALLOW EXCERPT IN PAGES
+/* 15. ALLOW EXCERPT IN PAGES
 /* -------------------------------------------------- */
 
 add_action( 'init', 'wpse325327_add_excerpts_to_pages' );
 function wpse325327_add_excerpts_to_pages() {
-    add_post_type_support( 'page', 'excerpt' );
+	add_post_type_support( 'page', 'excerpt' );
 }
 
 
 /* -------------------------------------------------- */
-/* 13. ALLOW HTML IN CATEGORY AND TAXONOMY DESCRIPTIONS
+/* 16. ALLOW HTML IN CATEGORY AND TAXONOMY DESCRIPTIONS
 /* -------------------------------------------------- */
 remove_filter( 'pre_term_description', 'wp_filter_kses' );
 remove_filter( 'pre_link_description', 'wp_filter_kses' );
@@ -575,7 +581,7 @@ remove_filter( 'term_description', 'wp_kses_data' );
 
 
 /* -------------------------------------------------- */
-/* 14. REGISTER META BOXES
+/* 17. REGISTER META BOXES
 /* -------------------------------------------------- */
 
 /*
@@ -585,86 +591,86 @@ add_action( 'load-post.php', 'video_post_meta_boxes_setup' );
 add_action( 'load-post-new.php', 'video_post_meta_boxes_setup' );
 
 function video_post_meta_boxes_setup() {
-    add_action( 'add_meta_boxes', 'video_add_post_meta_boxes' );
-    add_action( 'save_post', 'video_save_post_class_meta', 10, 2 );
+	add_action( 'add_meta_boxes', 'video_add_post_meta_boxes' );
+	add_action( 'save_post', 'video_save_post_class_meta', 10, 2 );
 }
 
 function video_add_post_meta_boxes() {
-    add_meta_box(
-        'video-post-class',
-        'Video settings',
-        'video_post_class_meta_box',
-        'post',
-        'side',
-        'default'
-    );
+	add_meta_box(
+		'video-post-class',
+		'Video settings',
+		'video_post_class_meta_box',
+		'post',
+		'side',
+		'default'
+	);
 }
 
 function video_post_class_meta_box( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'video_post_class_nonce' );?>
-    <div class="components-panel__row">
-      <div class="components-base-control">
-        <div class="components-base-control__field">
-          <label class="components-checkbox-control__label" for="video-post-class"><?php _e( 'Post with video', 'thegrapes' ); ?></label>
-          <select name="video-post-class" id="video-post-class" class="edit-post-post-schedule">
-            <?php
-              $video_select_values = array(
-                'no' => 'No',
-                'yes' => 'Yes'
-              );
-              $video_select_saved_value = get_post_meta( $post->ID, 'video_post_class', true );
-              foreach ($video_select_values as $key => $value) {
-                $selected_value = $key == $video_select_saved_value ? 'selected="selected"' : '';
-                echo '<option value="' . $key . '" ' . $selected_value . '>' . $value . '</option>';
-              }
-            ?>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="components-panel__row">
-      <div className="editor-post-featured-image">
-        <label for="video-preview-post-class"><?php _e( 'Video preview (240p)', 'thegrapes' ); ?></label>
-        <input type="text" name="video-preview-post-class" id="video-preview-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'video_preview_post_class', true ) ); ?>">
-        <input type="button" class="button upload_video_btn" value="Upload a video" />
-  		</div>
-    </div>
-    <div class="components-panel__row">
-      <div className="editor-post-featured-image">
-        <label for="video-header-post-class"><?php _e( 'Video header (720p)', 'thegrapes' ); ?></label>
-        <input type="text" name="video-header-post-class" id="video-header-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'video_header_post_class', true ) ); ?>">
-        <input type="button" class="button upload_video_btn" value="Upload a video" />
-  		</div>
-    </div>
+	wp_nonce_field( basename( __FILE__ ), 'video_post_class_nonce' );?>
+<div class="components-panel__row">
+	<div class="components-base-control">
+		<div class="components-base-control__field">
+			<label class="components-checkbox-control__label" for="video-post-class"><?php _e( 'Post with video', 'thegrapes' ); ?></label>
+			<select name="video-post-class" id="video-post-class" class="edit-post-post-schedule">
+				<?php
+	$video_select_values = array(
+		'no' => 'No',
+		'yes' => 'Yes'
+	);
+	$video_select_saved_value = get_post_meta( $post->ID, 'video_post_class', true );
+	foreach ($video_select_values as $key => $value) {
+		$selected_value = $key == $video_select_saved_value ? 'selected="selected"' : '';
+		echo '<option value="' . $key . '" ' . $selected_value . '>' . $value . '</option>';
+	}
+				?>
+			</select>
+		</div>
+	</div>
+</div>
+<div class="components-panel__row">
+	<div className="editor-post-featured-image">
+		<label for="video-preview-post-class"><?php _e( 'Video preview (240p)', 'thegrapes' ); ?></label>
+		<input type="text" name="video-preview-post-class" id="video-preview-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'video_preview_post_class', true ) ); ?>">
+		<input type="button" class="button upload_video_btn" value="Upload a video" />
+	</div>
+</div>
+<div class="components-panel__row">
+	<div className="editor-post-featured-image">
+		<label for="video-header-post-class"><?php _e( 'Video header (720p)', 'thegrapes' ); ?></label>
+		<input type="text" name="video-header-post-class" id="video-header-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'video_header_post_class', true ) ); ?>">
+		<input type="button" class="button upload_video_btn" value="Upload a video" />
+	</div>
+</div>
 <?php }
 
 function video_save_post_class_meta( $post_id, $post ) {
 
-    if ( !isset( $_POST['video_post_class_nonce'] ) || !wp_verify_nonce( $_POST['video_post_class_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
+	if ( !isset( $_POST['video_post_class_nonce'] ) || !wp_verify_nonce( $_POST['video_post_class_nonce'], basename( __FILE__ ) ) )
+		return $post_id;
 
-    $post_type = get_post_type_object( $post->post_type );
-    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
-        return $post_id;
+	$post_type = get_post_type_object( $post->post_type );
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
+		return $post_id;
 
-    $meta_values = array(
-      'video_post_class' => 'video-post-class',
-      'video_header_post_class' => 'video-header-post-class',
-      'video_preview_post_class' => 'video-preview-post-class'
-    );
+	$meta_values = array(
+		'video_post_class' => 'video-post-class',
+		'video_header_post_class' => 'video-header-post-class',
+		'video_preview_post_class' => 'video-preview-post-class'
+	);
 
-    foreach ($meta_values as $key => $value) {
-      $new_meta_value = ( isset( $_POST[$value] ) ? $_POST[$value] : '' );
-      $meta_key = $key;
-      $meta_value = get_post_meta( $post_id, $meta_key, true );
+	foreach ($meta_values as $key => $value) {
+		$new_meta_value = ( isset( $_POST[$value] ) ? $_POST[$value] : '' );
+		$meta_key = $key;
+		$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-      if ( $new_meta_value && '' == $meta_value )
-          add_post_meta( $post_id, $meta_key, $new_meta_value, true );
-      elseif ( $new_meta_value && $new_meta_value != $meta_value )
-          update_post_meta( $post_id, $meta_key, $new_meta_value );
-      elseif ( '' == $new_meta_value && $meta_value )
-          delete_post_meta( $post_id, $meta_key, $meta_value );
-    }
+		if ( $new_meta_value && '' == $meta_value )
+			add_post_meta( $post_id, $meta_key, $new_meta_value, true );
+		elseif ( $new_meta_value && $new_meta_value != $meta_value )
+			update_post_meta( $post_id, $meta_key, $new_meta_value );
+		elseif ( '' == $new_meta_value && $meta_value )
+			delete_post_meta( $post_id, $meta_key, $meta_value );
+	}
 }
 
 /*
@@ -674,87 +680,87 @@ add_action( 'load-post.php', 'readtime_post_meta_boxes_setup' );
 add_action( 'load-post-new.php', 'readtime_post_meta_boxes_setup' );
 
 function readtime_post_meta_boxes_setup() {
-    add_action( 'add_meta_boxes', 'readtime_add_post_meta_boxes' );
-    add_action( 'save_post', 'readtime_save_post_class_meta', 10, 2 );
+	add_action( 'add_meta_boxes', 'readtime_add_post_meta_boxes' );
+	add_action( 'save_post', 'readtime_save_post_class_meta', 10, 2 );
 }
 
 function readtime_add_post_meta_boxes() {
-    add_meta_box(
-        'readtime-post-class',
-        'Reading time',
-        'readtime_post_class_meta_box',
-        'post',
-        'side',
-        'default'
-    );
+	add_meta_box(
+		'readtime-post-class',
+		'Reading time',
+		'readtime_post_class_meta_box',
+		'post',
+		'side',
+		'default'
+	);
 }
 
 function readtime_post_class_meta_box( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'readtime_post_class_nonce' );?>
-    <div class="components-panel__row">
-      <div className="editor-post-featured-image">
-        <label for="read-time-post-class"><?php _e( 'Custom read time', 'thegrapes' ); ?></label>
-        <input type="number" name="read-time-post-class" id="read-time-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'read_time_post_class', true ) ); ?>">
-        <small><?php _e( 'Fill in custom read time in minutes.', 'thegrapes' ); ?></small>
-  		</div>
-    </div>
+	wp_nonce_field( basename( __FILE__ ), 'readtime_post_class_nonce' );?>
+<div class="components-panel__row">
+	<div className="editor-post-featured-image">
+		<label for="read-time-post-class"><?php _e( 'Custom read time', 'thegrapes' ); ?></label>
+		<input type="number" name="read-time-post-class" id="read-time-post-class" class="edit-post-post-schedule" value="<?php echo esc_attr( get_post_meta( $post->ID, 'read_time_post_class', true ) ); ?>">
+		<small><?php _e( 'Fill in custom read time in minutes.', 'thegrapes' ); ?></small>
+	</div>
+</div>
 <?php }
 
 function readtime_save_post_class_meta( $post_id, $post ) {
 
-    if ( !isset( $_POST['readtime_post_class_nonce'] ) || !wp_verify_nonce( $_POST['readtime_post_class_nonce'], basename( __FILE__ ) ) )
-        return $post_id;
+	if ( !isset( $_POST['readtime_post_class_nonce'] ) || !wp_verify_nonce( $_POST['readtime_post_class_nonce'], basename( __FILE__ ) ) )
+		return $post_id;
 
-    $post_type = get_post_type_object( $post->post_type );
-    if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
-        return $post_id;
+	$post_type = get_post_type_object( $post->post_type );
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
+		return $post_id;
 
-    $meta_values = array(
-      'read_time_post_class' => 'read-time-post-class',
-    );
+	$meta_values = array(
+		'read_time_post_class' => 'read-time-post-class',
+	);
 
-    foreach ($meta_values as $key => $value) {
-      $new_meta_value = ( isset( $_POST[$value] ) ? $_POST[$value] : '' );
-      $meta_key = $key;
-      $meta_value = get_post_meta( $post_id, $meta_key, true );
+	foreach ($meta_values as $key => $value) {
+		$new_meta_value = ( isset( $_POST[$value] ) ? $_POST[$value] : '' );
+		$meta_key = $key;
+		$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-      if ( $new_meta_value && '' == $meta_value )
-          add_post_meta( $post_id, $meta_key, $new_meta_value, true );
-      elseif ( $new_meta_value && $new_meta_value != $meta_value )
-          update_post_meta( $post_id, $meta_key, $new_meta_value );
-      elseif ( '' == $new_meta_value && $meta_value )
-          delete_post_meta( $post_id, $meta_key, $meta_value );
-    }
+		if ( $new_meta_value && '' == $meta_value )
+			add_post_meta( $post_id, $meta_key, $new_meta_value, true );
+		elseif ( $new_meta_value && $new_meta_value != $meta_value )
+			update_post_meta( $post_id, $meta_key, $new_meta_value );
+		elseif ( '' == $new_meta_value && $meta_value )
+			delete_post_meta( $post_id, $meta_key, $meta_value );
+	}
 }
 
 
 /* -------------------------------------------------- */
-/* 15. POST READ TIME COUNT
+/* 18. POST READ TIME COUNT
 /* -------------------------------------------------- */
 
 add_action( 'save_post', 'save_post_read_time', 3, 10 );
 
 function save_post_read_time( $post_id ) {
-    $post    = get_post( $post_id );
-    $content = $post->post_content;
-    $content = strip_tags(apply_filters('the_content', $content));
+	$post    = get_post( $post_id );
+	$content = $post->post_content;
+	$content = strip_tags(apply_filters('the_content', $content));
 
-    $meta_key = 'post_read_time';
-    $symbol_count = strlen($content);
-    $average_symbols_per_minute = 1000;
-    $meta_value = $symbol_count/$average_symbols_per_minute;
-    if( $meta_value < 0.5 ) $meta_value = 1;
-    $meta_value = round( $meta_value );
-    if ( metadata_exists('post', $post_id, 'post_read_time') ) {
-      update_post_meta( $post_id, $meta_key, $meta_value );
-    } else {
-      add_post_meta( $post_id, $meta_key, $meta_value, true );
-    }
+	$meta_key = 'post_read_time';
+	$symbol_count = strlen($content);
+	$average_symbols_per_minute = 1000;
+	$meta_value = $symbol_count/$average_symbols_per_minute;
+	if( $meta_value < 0.5 ) $meta_value = 1;
+	$meta_value = round( $meta_value );
+	if ( metadata_exists('post', $post_id, 'post_read_time') ) {
+		update_post_meta( $post_id, $meta_key, $meta_value );
+	} else {
+		add_post_meta( $post_id, $meta_key, $meta_value, true );
+	}
 }
 
 
 /* -------------------------------------------------- */
-/* 16. ALLOW WEBP
+/* 19. ALLOW WEBP
 /* -------------------------------------------------- */
 
 /**
@@ -769,12 +775,12 @@ function save_post_read_time( $post_id ) {
  */
 add_filter( 'wp_check_filetype_and_ext', 'wpse_file_and_ext_webp', 10, 4 );
 function wpse_file_and_ext_webp( $types, $file, $filename, $mimes ) {
-    if ( false !== strpos( $filename, '.webp' ) ) {
-        $types['ext'] = 'webp';
-        $types['type'] = 'image/webp';
-    }
+	if ( false !== strpos( $filename, '.webp' ) ) {
+		$types['ext'] = 'webp';
+		$types['type'] = 'image/webp';
+	}
 
-    return $types;
+	return $types;
 }
 
 /**
@@ -790,212 +796,212 @@ function wpse_file_and_ext_webp( $types, $file, $filename, $mimes ) {
  */
 add_filter( 'upload_mimes', 'wpse_mime_types_webp' );
 function wpse_mime_types_webp( $mimes ) {
-    $mimes['webp'] = 'image/webp';
+	$mimes['webp'] = 'image/webp';
 
-  return $mimes;
+	return $mimes;
 }
 
 
 /* -------------------------------------------------- */
-/* 17. BUY NOW BUTTON
+/* 20. BUY NOW BUTTON
 /* -------------------------------------------------- */
 
 function buy_now_submit_form() {
- ?>
-  <script>
-      jQuery(document).ready(function(){
-          // listen if someone clicks 'Buy Now' button
-          jQuery('#buy_now_button').click(function(){
-              // set value to 1
-              jQuery('#is_buy_now').val('1');
-              //submit the form
-              jQuery('form.cart').submit();
-          });
-      });
-  </script>
- <?php
+?>
+<script>
+	jQuery(document).ready(function(){
+		// listen if someone clicks 'Buy Now' button
+		jQuery('#buy_now_button').click(function(){
+			// set value to 1
+			jQuery('#is_buy_now').val('1');
+			//submit the form
+			jQuery('form.cart').submit();
+		});
+	});
+</script>
+<?php
 }
 add_action('woocommerce_after_add_to_cart_form', 'buy_now_submit_form');
 
 
 add_filter('woocommerce_add_to_cart_redirect', 'redirect_to_checkout');
 function redirect_to_checkout($redirect_url) {
-  if (isset($_REQUEST['is_buy_now']) && $_REQUEST['is_buy_now']) {
-     global $woocommerce;
-     $redirect_url = wc_get_checkout_url();
-  }
-  return $redirect_url;
+	if (isset($_REQUEST['is_buy_now']) && $_REQUEST['is_buy_now']) {
+		global $woocommerce;
+		$redirect_url = wc_get_checkout_url();
+	}
+	return $redirect_url;
 }
 
 /* -------------------------------------------------- */
-/* 18. DISPLAY DISCOUNT ON PRODUCT
+/* 21. DISPLAY DISCOUNT ON PRODUCT
 /* -------------------------------------------------- */
 
 add_filter( 'woocommerce_sale_flash', 'add_percentage_to_sale_badge', 20, 3 );
 function add_percentage_to_sale_badge( $html, $post, $product ) {
 
-  if( $product->is_type('variable')){
-      $percentages = array();
+	if( $product->is_type('variable')){
+		$percentages = array();
 
-      // Get all variation prices
-      $prices = $product->get_variation_prices();
+		// Get all variation prices
+		$prices = $product->get_variation_prices();
 
-      // Loop through variation prices
-      foreach( $prices['price'] as $key => $price ){
-          // Only on sale variations
-          if( $prices['regular_price'][$key] !== $price ){
-              // Calculate and set in the array the percentage for each variation on sale
-              $percentages[] = round( 100 - ( floatval($prices['sale_price'][$key]) / floatval($prices['regular_price'][$key]) * 100 ) );
-          }
-      }
-      // We keep the highest value
-      $percentage = max($percentages) . '%';
+		// Loop through variation prices
+		foreach( $prices['price'] as $key => $price ){
+			// Only on sale variations
+			if( $prices['regular_price'][$key] !== $price ){
+				// Calculate and set in the array the percentage for each variation on sale
+				$percentages[] = round( 100 - ( floatval($prices['sale_price'][$key]) / floatval($prices['regular_price'][$key]) * 100 ) );
+			}
+		}
+		// We keep the highest value
+		$percentage = max($percentages) . '%';
 
-  } elseif( $product->is_type('grouped') ){
-      $percentages = array();
+	} elseif( $product->is_type('grouped') ){
+		$percentages = array();
 
-      // Get all variation prices
-      $children_ids = $product->get_children();
+		// Get all variation prices
+		$children_ids = $product->get_children();
 
-      // Loop through variation prices
-      foreach( $children_ids as $child_id ){
-          $child_product = wc_get_product($child_id);
+		// Loop through variation prices
+		foreach( $children_ids as $child_id ){
+			$child_product = wc_get_product($child_id);
 
-          $regular_price = (float) $child_product->get_regular_price();
-          $sale_price    = (float) $child_product->get_sale_price();
+			$regular_price = (float) $child_product->get_regular_price();
+			$sale_price    = (float) $child_product->get_sale_price();
 
-          if ( $sale_price != 0 || ! empty($sale_price) ) {
-              // Calculate and set in the array the percentage for each child on sale
-              $percentages[] = round(100 - ($sale_price / $regular_price * 100));
-          }
-      }
-      // We keep the highest value
-      $percentage = max($percentages) . '%';
+			if ( $sale_price != 0 || ! empty($sale_price) ) {
+				// Calculate and set in the array the percentage for each child on sale
+				$percentages[] = round(100 - ($sale_price / $regular_price * 100));
+			}
+		}
+		// We keep the highest value
+		$percentage = max($percentages) . '%';
 
-  } elseif( $product->is_type( 'bundle' ) ) {
+	} elseif( $product->is_type( 'bundle' ) ) {
 
-    $regular_price = (float) $product->get_regular_price();
-    $sale_price    = (float) $product->get_sale_price();
-    $percentage = "BUNDLE";
+		$regular_price = (float) $product->get_regular_price();
+		$sale_price    = (float) $product->get_sale_price();
+		$percentage = "BUNDLE";
 
-  } else {
-      $regular_price = (float) $product->get_regular_price();
-      $sale_price    = (float) $product->get_sale_price();
+	} else {
+		$regular_price = (float) $product->get_regular_price();
+		$sale_price    = (float) $product->get_sale_price();
 
-      if ( $sale_price != 0 || ! empty($sale_price) ) {
-          $percentage    = round(100 - ($sale_price / $regular_price * 100)) . '%';
-      } else {
-          return $html;
-      }
-  }
-  return '<span class="onsale">' . esc_html__( 'SALE', 'woocommerce' ) . ' ' . $percentage . '</span>';
+		if ( $sale_price != 0 || ! empty($sale_price) ) {
+			$percentage    = round(100 - ($sale_price / $regular_price * 100)) . '%';
+		} else {
+			return $html;
+		}
+	}
+	return '<span class="onsale">' . esc_html__( 'SALE', 'woocommerce' ) . ' ' . $percentage . '</span>';
 }
 
 
 function display_product_discount( $product ) {
 
-  $percentage = '';
+	$percentage = '';
 
-  if( $product->is_type('variable')){
-      $percentages = array();
+	if( $product->is_type('variable')){
+		$percentages = array();
 
-      $args = array(
-          'post_type'     => 'product_variation',
-          'post_status'   => array( 'private', 'publish', 'draft' ),
-          'numberposts'   => -1,
-          'orderby'       => 'menu_order',
-          'order'         => 'asc',
-          'post_parent'   => $product->get_id() // get parent post-ID
-      );
-      $variations = get_posts( $args );
+		$args = array(
+			'post_type'     => 'product_variation',
+			'post_status'   => array( 'private', 'publish', 'draft' ),
+			'numberposts'   => -1,
+			'orderby'       => 'menu_order',
+			'order'         => 'asc',
+			'post_parent'   => $product->get_id() // get parent post-ID
+		);
+		$variations = get_posts( $args );
 
-      $variation_prices = array();
+		$variation_prices = array();
 
-      foreach ( $variations as $variation ) {
+		foreach ( $variations as $variation ) {
 
-          // get variation ID
-          $variation_ID = $variation->ID;
+			// get variation ID
+			$variation_ID = $variation->ID;
 
-          // get variations meta
-          $product_variation = new WC_Product_Variation( $variation_ID );
+			// get variations meta
+			$product_variation = new WC_Product_Variation( $variation_ID );
 
-          $regular_price = (float) $product_variation->get_regular_price();
-          $sale_price    = (float) $product_variation->get_sale_price();
-          $real_price = (float) $product_variation->get_price();
+			$regular_price = (float) $product_variation->get_regular_price();
+			$sale_price    = (float) $product_variation->get_sale_price();
+			$real_price = (float) $product_variation->get_price();
 
-          if( $real_price && $real_price < $regular_price ) {
-              $percentages[]    = round(100 - ($real_price / $regular_price * 100));
-          }
-
-
-      }
-
-      // We keep the highest value
-      if( ! empty( $percentages ) ) {
-        $percentage = max($percentages);
-      }
+			if( $real_price && $real_price < $regular_price ) {
+				$percentages[]    = round(100 - ($real_price / $regular_price * 100));
+			}
 
 
-  } elseif( $product->is_type('grouped') ){
+		}
 
-      $percentages = array();
+		// We keep the highest value
+		if( ! empty( $percentages ) ) {
+			$percentage = max($percentages);
+		}
 
-      // Get all variation prices
-      $children_ids = $product->get_children();
 
-      // Loop through variation prices
-      foreach( $children_ids as $child_id ){
-          $child_product = wc_get_product($child_id);
+	} elseif( $product->is_type('grouped') ){
 
-          $regular_price = (float) $child_product->get_regular_price();
-          $sale_price    = (float) $child_product->get_sale_price();
-          $real_price = (float) $child_product->get_price();
+		$percentages = array();
 
-          if ( $sale_price != 0 || ! empty($sale_price) ) {
-              // Calculate and set in the array the percentage for each child on sale
-              $percentages[] = round(100 - ($sale_price / $regular_price * 100));
-          } elseif( $real_price && $real_price < $regular_price ) {
-              $percentages[]    = round(100 - ($real_price / $regular_price * 100));
-          }
-      }
-      // We keep the highest value
-      $percentage = max($percentages);
+		// Get all variation prices
+		$children_ids = $product->get_children();
 
-  } elseif( $product->is_type( 'bundle' ) ) {
+		// Loop through variation prices
+		foreach( $children_ids as $child_id ){
+			$child_product = wc_get_product($child_id);
 
-    $regular_price = (float) $product->get_regular_price();
-    $sale_price    = (float) $product->get_sale_price();
-    $real_price = (float) $product->get_price();
+			$regular_price = (float) $child_product->get_regular_price();
+			$sale_price    = (float) $child_product->get_sale_price();
+			$real_price = (float) $child_product->get_price();
 
-    if ( $sale_price != 0 || ! empty($sale_price) ) {
-        $percentage    = round(100 - ($sale_price / $regular_price * 100));
-    } elseif( $real_price && $real_price < $regular_price ) {
-        $percentage    = round(100 - ($real_price / $regular_price * 100));
-    }
+			if ( $sale_price != 0 || ! empty($sale_price) ) {
+				// Calculate and set in the array the percentage for each child on sale
+				$percentages[] = round(100 - ($sale_price / $regular_price * 100));
+			} elseif( $real_price && $real_price < $regular_price ) {
+				$percentages[]    = round(100 - ($real_price / $regular_price * 100));
+			}
+		}
+		// We keep the highest value
+		$percentage = max($percentages);
 
-  } else {
-    $regular_price = (float) $product->get_regular_price();
-    $sale_price    = (float) $product->get_sale_price();
-    $real_price = (float) $product->get_price();
+	} elseif( $product->is_type( 'bundle' ) ) {
 
-    if ( $sale_price != 0 || ! empty($sale_price) ) {
-        $percentage    = round(100 - ($sale_price / $regular_price * 100));
-    } elseif( $real_price && $real_price < $regular_price ) {
-        $percentage    = round(100 - ($real_price / $regular_price * 100));
-    }
-  }
+		$regular_price = (float) $product->get_regular_price();
+		$sale_price    = (float) $product->get_sale_price();
+		$real_price = (float) $product->get_price();
 
-  if( $percentage ) {
-    return '<div class="pt-pr-discount">-' . $percentage . '%</div>';
-  } else {
-    return '';
-  }
+		if ( $sale_price != 0 || ! empty($sale_price) ) {
+			$percentage    = round(100 - ($sale_price / $regular_price * 100));
+		} elseif( $real_price && $real_price < $regular_price ) {
+			$percentage    = round(100 - ($real_price / $regular_price * 100));
+		}
+
+	} else {
+		$regular_price = (float) $product->get_regular_price();
+		$sale_price    = (float) $product->get_sale_price();
+		$real_price = (float) $product->get_price();
+
+		if ( $sale_price != 0 || ! empty($sale_price) ) {
+			$percentage    = round(100 - ($sale_price / $regular_price * 100));
+		} elseif( $real_price && $real_price < $regular_price ) {
+			$percentage    = round(100 - ($real_price / $regular_price * 100));
+		}
+	}
+
+	if( $percentage ) {
+		return '<div class="pt-pr-discount">-' . $percentage . '%</div>';
+	} else {
+		return '';
+	}
 
 }
 
 
 /* -------------------------------------------------- */
-/* 19. WOOCOMMERCE ORDERS TRACKING CODE
+/* 22. WOOCOMMERCE ORDERS TRACKING CODE
 /* -------------------------------------------------- */
 
 add_action( 'woocommerce_thankyou', 'my_custom_tracking' );

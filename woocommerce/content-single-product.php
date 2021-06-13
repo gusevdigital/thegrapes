@@ -70,7 +70,7 @@ if( ! $product->is_type('offer') ) {
 								<div class="carousel-inner">
 									<?php foreach ($product_gallery as $i => $id): ?>
 										<div class="carousel-item<?php echo !$i ? ' active' : ''; ?>">
-											<?php echo wp_get_attachment_image( $id, 'thegrapes-product-img', false, array( 'class' => $pt_img_shadow ) ); ?>
+											<?php echo wp_get_attachment_image( $id, 'thegrapes-product-gallery-img', false, array( 'class' => $pt_img_shadow ) ); ?>
 										</div>
 									<?php endforeach; ?>
 								</div>
@@ -104,7 +104,7 @@ if( ! $product->is_type('offer') ) {
 							</div>
 						<?php else : ?>
 							<div id="product-gallery">
-								<?php echo get_the_post_thumbnail( $product->get_id(), 'thegrapes-product-img', array( 'class' => 'img-fluid' . $pt_img_shadow) ); ?>
+								<?php echo get_the_post_thumbnail( $product->get_id(), 'thegrapes-product-gallery-img', array( 'class' => 'img-fluid' . $pt_img_shadow) ); ?>
 							</div>
 						<?php endif; ?>
 					</div>
@@ -309,7 +309,7 @@ if( ! $product->is_type('offer') ) {
 										</div>
 									</div>
 								<?php elseif( $product->is_type( 'bundle' )  ) : ?>
-									<div class="pt-dts row">
+									<div class="pt-dts row pt-8">
 										<?php if( $bundle_volume = get_post_meta( $product->get_id(), 'thegrapes_product_bundle_volume', true ) ) : ?>
 											<div class="pt-dt-item col-md-6 mb-4 d-flex flex-row">
 												<div class="pt-dt-img">
@@ -360,8 +360,9 @@ if( ! $product->is_type('offer') ) {
 
 						</div>
 
-						<div class="pt-info-bundle pt-4">
-							<?php
+
+						<?php
+						if( ! $product->is_type( 'bundle' ) ) {
 							$bundle_exists = false;
 							$bundle_items_html = '';
 
@@ -379,6 +380,8 @@ if( ! $product->is_type('offer') ) {
 							$bundled_products = new WP_Query( $args );
 
 							if ( $bundled_products->have_posts() ) {
+
+								echo '<div class="pt-info-bundle pt-4">';
 
 								while ( $bundled_products->have_posts() ) : $bundled_products->the_post();
 									$bundle_id = get_the_ID();
@@ -407,6 +410,8 @@ if( ! $product->is_type('offer') ) {
 											$bundle_items_html .= '</div></div>';
 									endif;
 								endwhile;
+
+								echo '</div>';
 							}
 							wp_reset_postdata();
 							if($bundle_exists) {
@@ -414,10 +419,9 @@ if( ! $product->is_type('offer') ) {
 								echo $bundle_items_html;
 								echo '<div class="bundle-margin-bottom"></div>';
 							}
+						}
 
-							?>
-						</div>
-					<?php if ( $product->is_type( 'bundle' ) ) : ?>
+						if ( $product->is_type( 'bundle' ) ) : ?>
 						<div class="pt-desc mb-4">
 							<?php the_content(); ?>
 						</div>
@@ -554,9 +558,12 @@ if( ! $product->is_type('offer') ) {
 									$variable_product = wc_get_product($variation_id);
 									//$regular_price = $variable_product->get_regular_price();
 									//$sale_price = $variable_product->get_sale_price();
-									$product_price = $variable_product->get_price_html();
+									if( $variable_product ) {
+									    $product_price = $variable_product->get_price_html();
 
-									$variation_exist = true;
+									    $variation_exist = true;
+									}
+									
 								}
 							}
 

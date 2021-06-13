@@ -158,7 +158,7 @@ function thegrapes_customizer( $wp_customize ) {
 
   $wp_customize->add_control(
     'set_home_main_title', array(
-      'label'         => __( 'Main Section: Title', 'thegrapes' ),
+      'label'         => __( 'Title', 'thegrapes' ),
       'description'   => __( 'Main header in the main section.', 'thegrapes' ),
       'section'       => 'sec_home_main',
       'type'          => 'text'
@@ -178,8 +178,43 @@ function thegrapes_customizer( $wp_customize ) {
     'set_home_main_desc', array(
       'type' => 'textarea',
       'section' => 'sec_home_main',
-      'label' => __( 'Main Section: Description', 'thegrapes' ),
+      'label' => __( 'Description', 'thegrapes' ),
       'description' => __( 'Main description in the main section.', 'thegrapes' ),
+    )
+  );
+
+  // HOMEPAGE -> MAIN -> BUTTON TEXT
+  $wp_customize->add_setting(
+    'set_home_main_btn_text', array(
+      'type'               => 'theme_mod',
+      'default'             => '',
+      'sanitize_callback'   => 'sanitize_text_field'
+    )
+  );
+
+  $wp_customize->add_control(
+    'set_home_main_btn_text', array(
+      'label'         => __( 'CTA Button: Text', 'thegrapes' ),
+      'description'   => __( 'Text for the CTA button,', 'thegrapes' ),
+      'section'       => 'sec_home_main',
+      'type'          => 'text'
+    )
+  );
+
+  // HOMEPAGE -> MAIN -> BUTTON LINK
+  $wp_customize->add_setting(
+    'set_home_main_btn_link', array(
+      'type'               => 'theme_mod',
+      'default'             => '',
+      'sanitize_callback'   => 'esc_url_raw'
+    )
+  );
+  $wp_customize->add_control(
+    'set_home_main_btn_link', array(
+      'label'         => 'CTA Button: Link',
+      'description'   => 'Link for the CTA button.',
+      'section'       => 'sec_home_main',
+      'type'          => 'url'
     )
   );
 
@@ -193,7 +228,7 @@ function thegrapes_customizer( $wp_customize ) {
   );
 
   $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'set_home_main_bottle', array(
-    'label' => __( 'Main Section: Bottle Image', 'thegrapes' ),
+    'label' => __( 'Bottle Image', 'thegrapes' ),
     'section' => 'sec_home_main',
     'description' => __( 'Prepare padding around image. Download and use current image as example. Image maximum height - 650px.', 'thegrapes' ),
     'mime_type' => 'image'
@@ -226,7 +261,7 @@ function thegrapes_customizer( $wp_customize ) {
   );
 
   $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'set_home_main_img', array(
-    'label' => __( 'Main Section: Background Image', 'thegrapes' ),
+    'label' => __( 'Background Image', 'thegrapes' ),
     'section' => 'sec_home_main',
     'description' => __( 'Upload masked image with maximum height 600px', 'thegrapes' ),
     'mime_type' => 'image'

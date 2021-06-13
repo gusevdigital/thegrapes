@@ -992,6 +992,7 @@ if ( empty( $all_free_rates )) {
 
 
 add_filter( 'default_checkout_billing_country', 'bbloomer_change_default_checkout_country' );
+add_filter( 'default_checkout_billing_country', 'bbloomer_change_default_checkout_country' );
 
 function bbloomer_change_default_checkout_country() {
   return 'SG';
@@ -1306,20 +1307,16 @@ function wh_offer_admin_custom_js() {
 
 add_action('admin_footer', 'wh_offer_admin_custom_js');
 
-/*
-* REDIRECT SINGLE OFFER TO OFFERS PAGE
-*/
-/*
-add_action('template_redirect','custom_shop_page_redirect');
-function custom_shop_page_redirect(){
-    if (class_exists('WooCommerce')){
-        if(is_product()){
-          $_product = wc_get_product( get_the_ID() );
-          if( $_product->is_type( 'offer' ) ) {
-            wp_redirect(home_url('/offers/'));
-            exit();
-          }
-        }
-    }
-    return;
-}*/
+
+/**
+ * CHECKOUT -> SET COUNTRY FOR THE CURRENT USER
+ */
+
+add_action( 'woocommerce_review_order_before_shipping', 'checkoutSetUserCountry', 10, 1 );
+
+function checkoutSetUserCountry() {
+	if( is_user_logged_in() ) {
+		update_user_meta( get_current_user_id(), 'shipping_country', 'SG' );
+		update_user_meta( get_current_user_id(), 'billing_country', 'SG' );
+	}
+}
