@@ -347,7 +347,8 @@
     $('.offers-item__timer').each( function() {
       if( $(this).attr('valid-till') ) {
 
-        var countDownDate = new Date($(this).attr('valid-till')).getTime();
+		  var valid_till = $(this).attr('valid-till').replace(/-/g,'/');
+        var countDownDate = new Date(valid_till).getTime();
 
         $(this).timer = setInterval( () => {
 

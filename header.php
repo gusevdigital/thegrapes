@@ -15,17 +15,30 @@ global $woocommerce;
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P6V8KZ7');</script>
+<!-- End Google Tag Manager -->
+	
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="profile" href="https://gmpg.org/xfn/11" />
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class( 'page-home' ); ?>>
-  <div id="loading-wrap" class="text-center" style="">
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P6V8KZ7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+	
+  <!--<div id="loading-wrap" class="text-center" style="">
     <span class="valign-helper"></span>
 		<?php $loading_img = get_theme_mod( 'set_loading_logo', IMAGES . '/logo-white.png' ); ?>
     <?php echo wp_get_attachment_image( $loading_img, 'full' ); ?>
-  </div>
+  </div>-->
   <div class="main-wrap">
     <header id="header" class="fixed-top">
       <div class="container">
@@ -126,15 +139,15 @@ global $woocommerce;
             <a class="navbar-logo py-lg-3 d-table-cell text-center w-33" title="<?php _e( 'Go to home page', 'thegrapes' ); ?>" href="<?php echo home_url( '/' ) ?>" alt="<?php bloginfo( 'name' ); ?>">
 							<?php $img = get_theme_mod( 'set_header_logo', IMAGES . '/logo.svg' ); ?>
 							<?php if( is_numeric( $img ) ) : ?>
-								<?php echo wp_get_attachment_image( $img, 'full', false, array( 'class' => 'logo-desktop d-none d-sm-inline-block' ) ); ?>
+								<?php echo wp_get_attachment_image( $img, 'full', false, array( 'class' => 'logo-desktop d-none d-sm-inline-block nolazyload' ) ); ?>
 							<?php else: ?>
-								<img src="<?php echo $img ?>" class="logo-desktop d-none d-sm-inline-block" />
+								<img src="<?php echo $img ?>" class="logo-desktop d-none d-sm-inline-block nolazyload" />
 							<?php endif; ?>
 							<?php $img = get_theme_mod( 'set_header_mobile_logo', IMAGES . '/logo-mobile.svg' ); ?>
 							<?php if( is_numeric( $img ) ) : ?>
-								<?php echo wp_get_attachment_image( $img, 'full', false, array( 'class' => 'logo-mobile d-inline-block d-sm-none' ) ); ?>
+								<?php echo wp_get_attachment_image( $img, 'full', false, array( 'class' => 'logo-mobile d-inline-block d-sm-none nolazyload', 'width' => '22', 'height' => '32' ) ); ?>
 							<?php else: ?>
-								<img src="<?php echo $img; ?>" class="logo-mobile d-inline-block d-sm-none" />
+								<img src="<?php echo $img; ?>" class="logo-mobile d-inline-block d-sm-none nolazyload" />
 							<?php endif; ?>
             </a>
             <div class="nav-shop d-table-cell text-right w-33">

@@ -8,6 +8,7 @@
   src: url("../fonts/apercu/regular/apercu-regular.eot?#iefix") format('embedded-opentype'), url("../fonts/apercu/regular/apercu-regular.woff2") format('woff2'), url("../fonts/apercu/regular/apercu-regular.woff") format('woff'), url("../fonts/apercu/regular/apercu-regular.ttf") format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'apercu';
@@ -15,6 +16,7 @@
   src: url("../fonts/apercu/bold/apercu-bold-pro.eot?#iefix") format('embedded-opentype'), url("../fonts/apercu/bold/apercu-bold-pro.woff2") format('woff2'), url("../fonts/apercu/bold/apercu-bold-pro.woff") format('woff'), url("../fonts/apercu/bold/apercu-bold-pro.ttf") format('truetype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'apercu';
@@ -22,6 +24,7 @@
   src: url("../fonts/apercu/light/apercu-light-pro.eot?#iefix") format('embedded-opentype'), url("../fonts/apercu/light/apercu-light-pro.woff2") format('woff2'), url("../fonts/apercu/light/apercu-light-pro.woff") format('woff'), url("../fonts/apercu/light/apercu-light-pro.ttf") format('truetype');
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
     font-family: 'apercu';
@@ -29,13 +32,14 @@
          url('../fonts/apercu/italic/apercu-italic-webfont.woff') format('woff');
     font-weight: 400;
     font-style: italic;
-
+    font-display: swap;
 }
 @font-face {
   font-family: 'monckeberg';
   src: url("../fonts/monckeberg/medium/latinotype_-_monckeberg_medium-webfont.woff2") format('woff2'), url("../fonts/monckeberg/medium/latinotype_-_monckeberg_medium-webfont.woff") format('woff');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 
@@ -692,6 +696,9 @@ cite {
     margin-right: $spacer;
   }
 }
+.wp-block-quote.is-large, .wp-block-quote.is-style-large {
+  padding: 0 !important;
+}
 
 // lead
 .lead {
@@ -825,15 +832,15 @@ header {
 
  /* DROPDOWN MENU */
  .main-navbar .menu-item-has-children.dropdown {
-   padding-right: $spacer-1_4;
+   padding-right: $spacer-2 !important;
  }
 .main-navbar .menu-item-has-children.dropdown:before {
   content: '';
   position: absolute;
-  right: $spacer-1_4;
+  right: $spacer-2;
   top: 50%;
   border: solid $gray-600;
-  border-width: 0 ($spacer-1_2 - 1px) ($spacer-1_2 - 1px) 0;
+  border-width: 0 ($spacer-1_4) ($spacer-1_4) 0;
   display: inline-block;
   padding: $spacer-1_2 - 1px;
   transform: rotate(45deg) translate(-50%,-50%);
@@ -1595,6 +1602,19 @@ footer {
  }
 
  /*
+ * HEADERS
+ */
+ .intro-bg-img {
+   text-align: right;
+   img {
+     max-width: 100%;
+     max-height: 100%;
+     height: auto;
+     width: auto;
+   }
+ }
+
+ /*
   * HOME -> INTRO
   */
 
@@ -2290,7 +2310,8 @@ footer {
   }
 }
 .pt-add-to-cart-wrapper>.bundle_availability,
-.pt-stock__outofstock {
+.pt-stock__outofstock,
+.stock.out-of-stock {
   color: $secondary !important;
   display: inline-block;
   font-weight: $font-weight-bold;
@@ -2780,7 +2801,6 @@ select,
   min-height: $spacer-15;
   height: $spacer-15;
   -webkit-appearance: none;
-  cursor: pointer;
   padding: $spacer+$spacer-1_2 $spacer-2;
   background-color: transparent;
   border: $border-width solid $blue-70;

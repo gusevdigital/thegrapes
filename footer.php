@@ -51,19 +51,19 @@ $footer_copyright = get_theme_mod( 'set_footer_copyright_text', '' );
             <div class="footer-contacts">
               <?php if( $footer_phone ) : ?>
               <div class="contact-item d-flex align-items-center">
-                <img src="<?php echo ICONS . '/phone.png'; ?>" class="mr-2" />
+                <img src="<?php echo ICONS . '/phone.png'; ?>" class="mr-2" width="32" height="32" />
                 <a rel="nofollow" href="tel:<?php echo filter_var($footer_phone, FILTER_SANITIZE_NUMBER_INT);; ?>" class="link-light" title="<?php _e( 'Our phone number', 'thegrapes' ); ?>"><?php echo strip_tags( $footer_phone ); ?></a>
               </div>
               <?php endif; ?>
               <?php if( $footer_email ) : ?>
               <div class="contact-item d-flex align-items-center">
-                <img src="<?php echo ICONS . '/email.png'; ?>" class="mr-2" />
+                <img src="<?php echo ICONS . '/email.png'; ?>" class="mr-2" width="32" height="32" />
                 <a rel="nofollow" href="mailto:<?php echo filter_var($footer_email, FILTER_SANITIZE_EMAIL); ?>" class="link-light" title="<?php _e( 'Our Email', 'thegrapes' ); ?>"><?php echo filter_var($footer_email, FILTER_SANITIZE_EMAIL); ?></a>
               </div>
               <?php endif; ?>
               <?php if( $footer_address ) : ?>
               <div class="contact-item d-flex align-items-center">
-                <img src="<?php echo ICONS . '/location.png'; ?>" class="mr-2" />
+                <img src="<?php echo ICONS . '/location.png'; ?>" class="mr-2" width="32" height="32" />
                 <a rel="nofollow" class="link-light" title="<?php _e( 'Our address', 'thegrapes' ); ?>"><?php echo strip_tags( $footer_address ); ?></a>
               </div>
               <?php endif; ?>
@@ -87,22 +87,22 @@ $footer_copyright = get_theme_mod( 'set_footer_copyright_text', '' );
             <div class="footer-socials d-flex flex-row">
               <?php if( $footer_instagram ) : ?>
               <a rel="nofollow" title="<?php _e( 'Visit our Instagram account', 'thegrapes' ); ?>" href="<?php echo esc_url( $footer_instagram ); ?>" title="Visit our Instagram account" target="_blank">
-                <img src="<?php echo ICONS . '/instagram.png'; ?>" />
+                <img src="<?php echo ICONS . '/instagram.png'; ?>" width="32" height="32" />
               </a>
               <?php endif; ?>
               <?php if( $footer_facebook ) : ?>
               <a rel="nofollow" title="<?php _e( 'Visit our Facebook page', 'thegrapes' ); ?>" href="<?php echo esc_url( $footer_facebook ); ?>" title="Visit our Facebook page" target="_blank">
-                <img src="<?php echo ICONS . '/facebook.png'; ?>" />
+                <img src="<?php echo ICONS . '/facebook.png'; ?>" width="32" height="32" />
               </a>
               <?php endif; ?>
               <?php if( $footer_youtube ) : ?>
               <a rel="nofollow" title="<?php _e( 'Visit our YouTube channel', 'thegrapes' ); ?>" href="<?php echo esc_url( $footer_youtube ); ?>" title="Visit our YouTube channel" target="_blank">
-                <img src="<?php echo ICONS . '/youtube.png'; ?>" />
+                <img src="<?php echo ICONS . '/youtube.png'; ?>" width="32" height="32" />
               </a>
               <?php endif; ?>
               <?php if( $footer_whatsapp ) : ?>
               <a rel="nofollow" href="<?php echo esc_url( $footer_whatsapp ); ?>" title="<?php _e( 'Chat with us via WhatsApp', 'thegrapes' ); ?>" target="_blank">
-                <img src="<?php echo ICONS . '/whatsapp.png'; ?>" />
+                <img src="<?php echo ICONS . '/whatsapp.png'; ?>" width="32" height="32" />
               </a>
               <?php endif; ?>
             </div>

@@ -47,8 +47,8 @@ for ($i=0; $i < 5; $i++) {
 			</div>
 			<div class="col-lg-6 col-xl-7 col-12 home-intro-wrap mb-5">
         <?php if( isset($member_header_img) && $member_header_img ): ?>
-					<div class="home-intro-bg-img">
-            <?php echo wp_get_attachment_image( $member_header_img, 'full', false, array( 'class' => ' wow fadeInUp', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s' ) ); ?>
+					<div class="intro-bg-img">
+            <?php echo wp_get_attachment_image( $member_header_img, 'full', false, array( 'class' => ' wow fadeInUp nolazyload', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s' ) ); ?>
           </div>
 
 				<?php endif; ?>

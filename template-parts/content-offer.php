@@ -65,11 +65,14 @@ if( $display_offer ) :
             $wine_link = get_the_permalink( $wine_id );
 
             $wine_product = wc_get_product($wine_id);
-            $wine_price = $wine_product->get_regular_price();
-            $total_wine_price += $wine_price;
-            ?>
-            <a href="<?php echo $wine_link; ?>" title="<?php echo $wine_title; ?>" class="list-link"><span></span><?php echo $wine_title; ?></a>
+		  	$wine_price = 0;
+		  	if( $wine_product ) :
+				$wine_price = $wine_product->get_regular_price();
+            	$total_wine_price += $wine_price;
+            	?>
+            	<a href="<?php echo $wine_link; ?>" title="<?php echo $wine_title; ?>" class="list-link"><span></span><?php echo $wine_title; ?></a>
             <?php
+		  	endif;
           endforeach;
         endif;
         ?>

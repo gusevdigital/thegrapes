@@ -25,7 +25,7 @@
       </div>
       <?php if( has_post_thumbnail() ) : ?>
       <div class="col-lg-6 col-xl-7 col-12 home-intro-wrap mb-5">
-        <div class="home-intro-bg-img">
+        <div class="intro-bg-img">
           <?php echo the_post_thumbnail( 'full', array( 'class' => ' wow fadeInUp', 'data-wow-duration' => '1s', 'data-wow-delay' => '.4s' ) ) ?>
         </div>
 			</div>
